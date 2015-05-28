@@ -1,0 +1,25 @@
+﻿{
+    "name": "WrightsAtHome",
+    "preferGlobal": true,
+    "version": "0.1.0",
+    "author": "Bruce Wright",
+    "description": "Home Automation Project",
+    "bin": {
+        "package-name": "./bin/package-name"
+    },
+    "dependencies": {
+    },
+    "analyze": false,
+    "devDependencies": {
+        "karma": "^0.12.31",
+        "karma-jasmine": "^0.3.5",
+        "gulp": "^3.8.10",
+        "gulp-bower": "^0.0.10",
+        "gulp-concat": "^2.4.3",
+        "gulp-karma": "^0.0.4"
+    },
+    "license": "MIT",
+    "engines": {
+        "node": ">=0.6"
+    }
+}
