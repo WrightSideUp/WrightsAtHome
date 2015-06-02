@@ -17,7 +17,7 @@
 // Missing XML comment for publicly visible type or member '...'
 #pragma warning disable 1591
 
-namespace WrightsAtHome.BackEnd.Domain.Services.Trigger.Parser.Generated
+namespace WrightsAtHome.Server.Domain.Services.Trigger.Parser.Generated
 {
 
     using Antlr4.Runtime.Misc;
@@ -216,4 +216,4 @@ namespace WrightsAtHome.BackEnd.Domain.Services.Trigger.Parser.Generated
         /// <remarks>The default implementation does nothing.</remarks>
         public virtual void VisitErrorNode([NotNull] IErrorNode node) { }
     }
-} // namespace WrightsAtHome.BackEnd.Domain.Services.Trigger.Parser.Generated
+} // namespace WrightsAtHome.Server.Domain.Services.Trigger.Parser.Generated

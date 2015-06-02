@@ -1,29 +1,41 @@
 ﻿using System.Collections.Generic;
+using System.Data.Entity;
+using System.Linq;
+using System.Threading.Tasks;
 using System.Web.Http;
-
-// For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+using WrightsAtHome.Server.DataAccess;
+using WrightsAtHome.Server.API.Common;
 
 namespace WrightsAtHome.Server.API.Devices
 {
     [RoutePrefix("api/[controller]")]
     public class DevicesController : ApiController
     {
-        private readonly List<DeviceInfo> data = new List<DeviceInfo>
+        private readonly IAtHomeDbContext dbContext;
+        
+        public DevicesController(IAtHomeDbContext dbContext)
         {
-            new DeviceInfo { Id=1, Name = "Pool Light", IsOn = false, SmallImageUrl = "img/devices_small/PoolLight.png", LargeImageUrl = "img/devices_large/PoolLight.png", NextEvent = "Turn On at Dark" },
-            new DeviceInfo { Id=2, Name = "Fountain", IsOn = true, SmallImageUrl = "img/devices_small/Fountain.png", LargeImageUrl = "img/devices_large/Fountain.png", NextEvent = "None" },
-            new DeviceInfo { Id=3, Name="Landscape Lights - Front", IsOn = false, SmallImageUrl = "img/devices_small/LandscapeLights.png", LargeImageUrl="img/devices_large/LandscapeLights.png", NextEvent = "Turn Off at 11:00pm" },
-            new DeviceInfo { Id=4, Name="Landscape Lights - Back", IsOn = true, SmallImageUrl = "img/devices_small/LandscapeLights.png", LargeImageUrl = "img/devices_large/LandscapeLights.png", NextEvent = "Turn Off at 12:00am" },
-            new DeviceInfo { Id=5, Name="Pool Pump", IsOn = false, SmallImageUrl = "img/devices_small/PoolPump.png", LargeImageUrl = "img/devices_large/PoolPump.png", NextEvent = "Turn On at 1:00am" },
-            new DeviceInfo { Id=6, Name="Pool Heater", IsOn = false, SmallImageUrl = "img/devices_small/PoolHeater.png", LargeImageUrl = "img/devices_large/PoolHeater.png", NextEvent = "Turn On when Pool 10deg < Air" },
-            new DeviceInfo { Id=7, Name="Xmas Lights", IsOn = false, SmallImageUrl = "img/devices_small/XmasLights.png", LargeImageUrl = "img/devices_large/XmasLights.png", NextEvent = "None" },
-        };
-
+            this.dbContext = dbContext;
+        }
         
         // GET: api/values
-        public IEnumerable<DeviceInfo> Get()
+        public async Task<IEnumerable<DeviceInfo>> Get()
         {
-            return data;
+            return await dbContext.Devices
+                .Include(s => s.PossibleStates)
+                .Select(d => new DeviceInfo
+                {
+                    Id = d.Id,
+                    Name = d.Name,
+                    LargeImageUrl = this.DeviceImageUrlLarge(d.ImageName),
+                    SmallImageUrl = this.DeviceImageUrlSmall(d.ImageName),
+                    PossibleStates = d.PossibleStates.Select(ds => new DeviceStateInfo
+                                        {
+                                            Id = ds.Id, Name = ds.Name, StateNumber = ds.StateNumber
+                                        }).ToArray(),
+                    CurrentStateId = d.PossibleStates[0].Id,
+                    NextEvent = d.StartTriggerText
+                }).ToListAsync();
         }
     }
 }

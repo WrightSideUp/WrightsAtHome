@@ -1,6 +1,6 @@
 ﻿using Antlr4.Runtime;
 
-namespace WrightsAtHome.BackEnd.Domain.Services.Trigger.Parser
+namespace WrightsAtHome.Server.Domain.Services.Trigger.Parser
 {
     class TriggerErrors : BaseErrorListener
     {

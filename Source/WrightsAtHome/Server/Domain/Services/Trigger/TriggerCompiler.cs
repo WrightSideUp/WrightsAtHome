@@ -2,10 +2,10 @@
 using System.Linq.Expressions;
 using Antlr4.Runtime;
 using Antlr4.Runtime.Tree;
-using WrightsAtHome.BackEnd.Domain.Services.Trigger.Parser;
-using WrightsAtHome.BackEnd.Domain.Services.Trigger.Parser.Generated;
+using WrightsAtHome.Server.Domain.Services.Trigger.Parser;
+using WrightsAtHome.Server.Domain.Services.Trigger.Parser.Generated;
 
-namespace WrightsAtHome.BackEnd.Domain.Services.Trigger
+namespace WrightsAtHome.Server.Domain.Services.Trigger
 {
     public interface ITriggerCompiler
     {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace WrightsAtHome.BackEnd.Domain.Services.Trigger
+namespace WrightsAtHome.Server.Domain.Services.Trigger
 {
     public class TriggerException : Exception
     {

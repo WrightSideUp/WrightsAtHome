@@ -1,25 +1,31 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
-namespace WrightsAtHome.BackEnd.Domain.Entities
+namespace WrightsAtHome.Server.Domain.Entities
 {
     public class Device
     {
         public int Id { get; set; }
+        
         public string Name { get; set; }
-        public string SmallImageUrl { get; set; }
-        public string LargeImageUrl { get; set; }
+        
+        public string ImageName { get; set; }
+        
         public List<DeviceState> PossibleStates { get; private set; }
-        public DeviceState CurrentState { get; set; }
-        public DeviceStateChange LastStateChange { get; set; }
-        public string StartTriggerText { get; set; }
-        public Func<bool> StartTrigger { get; set; } 
-        public string StopTriggerText { get; set; }
-        public Func<DateTime, bool> EndTrigger { get; set; }
 
+        public string StartTriggerText { get; set; }
+        
+        public string EndTriggerText { get; set; }
+
+        public List<DeviceStateChange> StateChanges { get; set; }
+        
         public Device()
         {
             PossibleStates = new List<DeviceState>();
+        }
+
+        public Device(params DeviceState[] possibleStates)
+        {
+            PossibleStates = new List<DeviceState>(possibleStates);
         }
     }
 }

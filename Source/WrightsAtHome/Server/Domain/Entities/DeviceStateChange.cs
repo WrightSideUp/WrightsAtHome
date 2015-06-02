@@ -1,10 +1,12 @@
 ﻿using System;
 
-namespace WrightsAtHome.BackEnd.Domain.Entities
+namespace WrightsAtHome.Server.Domain.Entities
 {
     public class DeviceStateChange
     {
         public int Id { get; set; }
+
+        public Device Device { get; set; }
 
         public DateTime AppliedDate { get; set; }
 

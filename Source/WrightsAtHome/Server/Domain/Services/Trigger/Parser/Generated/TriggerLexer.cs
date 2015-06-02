@@ -20,7 +20,7 @@ using System;
 // Missing XML comment for publicly visible type or member '...'
 #pragma warning disable 1591
 
-namespace WrightsAtHome.BackEnd.Domain.Services.Trigger.Parser.Generated
+namespace WrightsAtHome.Server.Domain.Services.Trigger.Parser.Generated
 {
     using Antlr4.Runtime;
     using Antlr4.Runtime.Atn;
@@ -158,4 +158,4 @@ namespace WrightsAtHome.BackEnd.Domain.Services.Trigger.Parser.Generated
         public static readonly ATN _ATN =
             new ATNDeserializer().Deserialize(_serializedATN.ToCharArray());
     }
-} // namespace WrightsAtHome.BackEnd.Domain.Services.Trigger.Parser.Generated
+} // namespace WrightsAtHome.Server.Domain.Services.Trigger.Parser.Generated

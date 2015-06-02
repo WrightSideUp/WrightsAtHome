@@ -1,10 +1,16 @@
 ﻿
-namespace WrightsAtHome.BackEnd.Domain.Entities
+using System.Collections.Generic;
+
+namespace WrightsAtHome.Server.Domain.Entities
 {
     public class DeviceState
     {
-        public string Id { get; set; }
+        public int Id { get; set; }
+
         public string Name { get; set; }
+
         public int StateNumber { get; set; }
+
+        public List<Device> Devices { get; set; } 
     }
 }

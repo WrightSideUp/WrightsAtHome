@@ -17,7 +17,7 @@
 // Missing XML comment for publicly visible type or member '...'
 #pragma warning disable 1591
 
-namespace WrightsAtHome.BackEnd.Domain.Services.Trigger.Parser.Generated
+namespace WrightsAtHome.Server.Domain.Services.Trigger.Parser.Generated
 {
     using Antlr4.Runtime.Misc;
     using IParseTreeListener = Antlr4.Runtime.Tree.IParseTreeListener;
@@ -185,4 +185,4 @@ namespace WrightsAtHome.BackEnd.Domain.Services.Trigger.Parser.Generated
         /// <param name="context">The parse tree.</param>
         void ExitParen([NotNull] TriggerParser.ParenContext context);
     }
-} // namespace WrightsAtHome.BackEnd.Domain.Services.Trigger.Parser.Generated
+} // namespace WrightsAtHome.Server.Domain.Services.Trigger.Parser.Generated

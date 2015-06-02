@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace WrightsAtHome.BackEnd.Domain.Services.Trigger.Parser
+namespace WrightsAtHome.Server.Domain.Services.Trigger.Parser
 {
     public interface ITriggerHelpers
     {
