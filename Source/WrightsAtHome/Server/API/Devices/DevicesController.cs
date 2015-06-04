@@ -21,9 +21,11 @@ namespace WrightsAtHome.Server.API.Devices
         // GET: api/values
         public async Task<IEnumerable<DeviceInfo>> Get()
         {
-            return await dbContext.Devices
+            var devices = await dbContext.Devices
                 .Include(s => s.PossibleStates)
-                .Select(d => new DeviceInfo
+                .ToListAsync();
+
+            return devices.Select(d => new DeviceInfo
                 {
                     Id = d.Id,
                     Name = d.Name,
@@ -35,7 +37,7 @@ namespace WrightsAtHome.Server.API.Devices
                                         }).ToArray(),
                     CurrentStateId = d.PossibleStates[0].Id,
                     NextEvent = d.StartTriggerText
-                }).ToListAsync();
+                }).ToList();
         }
     }
 }

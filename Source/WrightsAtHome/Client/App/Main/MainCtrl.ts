@@ -1,4 +1,4 @@
-﻿/// <reference path="../Typings/AngularJS/angular.d.ts" />
+﻿/// <reference path="../../Typings/AngularJS/angular.d.ts" />
 
 module WrightsAtHome.Controllers {
 

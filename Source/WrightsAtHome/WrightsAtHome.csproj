@@ -142,25 +142,25 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App\Content\img\devices_large\Fountain.png" />
-    <Content Include="App\Content\img\devices_large\LandscapeLights.png" />
-    <Content Include="App\Content\img\devices_large\LightSensor.png" />
-    <Content Include="App\Content\img\devices_large\PoolHeater.png" />
-    <Content Include="App\Content\img\devices_large\PoolLight.png" />
-    <Content Include="App\Content\img\devices_large\PoolPump.png" />
-    <Content Include="App\Content\img\devices_large\Thermometer.png" />
-    <Content Include="App\Content\img\devices_large\XmasLights.png" />
-    <Content Include="App\Content\img\devices_small\Fountain.png" />
-    <Content Include="App\Content\img\devices_small\LandscapeLights.png" />
-    <Content Include="App\Content\img\devices_small\LightSensor.png" />
-    <Content Include="App\Content\img\devices_small\PoolHeater.png" />
-    <Content Include="App\Content\img\devices_small\PoolLight.png" />
-    <Content Include="App\Content\img\devices_small\PoolPump.png" />
-    <Content Include="App\Content\img\devices_small\Thermometer.png" />
-    <Content Include="App\Content\img\devices_small\XmasLights.png" />
-    <Content Include="App\Content\img\Header.jpg" />
-    <Content Include="App\Content\index.html" />
-    <Content Include="App\Scripts\3rdParty\angular-bootstrap-switch.js" />
+    <Content Include="Client\App\Images\devices_large\Fountain.png" />
+    <Content Include="Client\App\Images\devices_large\LandscapeLights.png" />
+    <Content Include="Client\App\Images\devices_large\LightSensor.png" />
+    <Content Include="Client\App\Images\devices_large\PoolHeater.png" />
+    <Content Include="Client\App\Images\devices_large\PoolLight.png" />
+    <Content Include="Client\App\Images\devices_large\PoolPump.png" />
+    <Content Include="Client\App\Images\devices_large\Thermometer.png" />
+    <Content Include="Client\App\Images\devices_large\XmasLights.png" />
+    <Content Include="Client\App\Images\devices_small\Fountain.png" />
+    <Content Include="Client\App\Images\devices_small\LandscapeLights.png" />
+    <Content Include="Client\App\Images\devices_small\LightSensor.png" />
+    <Content Include="Client\App\Images\devices_small\PoolHeater.png" />
+    <Content Include="Client\App\Images\devices_small\PoolLight.png" />
+    <Content Include="Client\App\Images\devices_small\PoolPump.png" />
+    <Content Include="Client\App\Images\devices_small\Thermometer.png" />
+    <Content Include="Client\App\Images\devices_small\XmasLights.png" />
+    <Content Include="Client\App\Images\Header.jpg" />
+    <Content Include="Client\App\index.html" />
+    <Content Include="Gulpfile.config.js" />
     <Content Include="Gulpfile.js" />
     <Content Include="Web.config" />
   </ItemGroup>
@@ -211,7 +211,7 @@
     <Content Include="package.json" />
     <Content Include="packages.config" />
     <Content Include="bower.json" />
-    <Content Include="App\Sass\main.scss" />
+    <Content Include="Client\App\main.scss" />
     <Antlr4 Include="Server\Domain\Services\Trigger\Parser\Grammar\Trigger.g4">
       <Generator>MSBuild:Compile</Generator>
       <CustomToolNamespace>WrightsAtHome.Server.Domain.Services.Trigger.Parser.Grammar</CustomToolNamespace>
@@ -224,24 +224,24 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <TypeScriptCompile Include="App\Scripts\Dashboard\DashboardCtrl.ts" />
-    <TypeScriptCompile Include="App\Scripts\Dashboard\ScheduleCtrl.ts" />
-    <TypeScriptCompile Include="App\Scripts\Dashboard\StateChange.ts" />
-    <TypeScriptCompile Include="App\Scripts\Main\app.ts" />
-    <TypeScriptCompile Include="App\Scripts\Main\devicesService.ts" />
-    <TypeScriptCompile Include="App\Scripts\Main\MainCtrl.ts" />
-    <TypeScriptCompile Include="App\Scripts\Main\Models.ts" />
-    <TypeScriptCompile Include="App\Scripts\Main\sensorsService.ts" />
-    <TypeScriptCompile Include="App\Scripts\Typings\Angular-UI-Bootstrap\angular-ui-bootstrap.d.ts" />
-    <TypeScriptCompile Include="App\Scripts\Typings\AngularJS\angular-animate.d.ts" />
-    <TypeScriptCompile Include="App\Scripts\Typings\AngularJS\angular-cookies.d.ts" />
-    <TypeScriptCompile Include="App\Scripts\Typings\AngularJS\angular-mocks.d.ts" />
-    <TypeScriptCompile Include="App\Scripts\Typings\AngularJS\angular-resource.d.ts" />
-    <TypeScriptCompile Include="App\Scripts\Typings\AngularJS\angular-route.d.ts" />
-    <TypeScriptCompile Include="App\Scripts\Typings\AngularJS\angular-sanitize.d.ts" />
-    <TypeScriptCompile Include="App\Scripts\Typings\AngularJS\angular.d.ts" />
-    <TypeScriptCompile Include="App\Scripts\Typings\jQuery\jquery.d.ts" />
-    <TypeScriptCompile Include="App\Scripts\Typings\Restangular\restangular.d.ts" />
+    <TypeScriptCompile Include="Client\App\Dashboard\DashboardCtrl.ts" />
+    <TypeScriptCompile Include="Client\App\Dashboard\ScheduleCtrl.ts" />
+    <TypeScriptCompile Include="Client\App\Dashboard\StateChange.ts" />
+    <TypeScriptCompile Include="Client\App\app.ts" />
+    <TypeScriptCompile Include="Client\App\Services\devicesService.ts" />
+    <TypeScriptCompile Include="Client\App\Main\MainCtrl.ts" />
+    <TypeScriptCompile Include="Client\App\Services\Models.ts" />
+    <TypeScriptCompile Include="Client\App\Services\sensorsService.ts" />
+    <TypeScriptCompile Include="Client\Typings\Angular-UI-Bootstrap\angular-ui-bootstrap.d.ts" />
+    <TypeScriptCompile Include="Client\Typings\AngularJS\angular-animate.d.ts" />
+    <TypeScriptCompile Include="Client\Typings\AngularJS\angular-cookies.d.ts" />
+    <TypeScriptCompile Include="Client\Typings\AngularJS\angular-mocks.d.ts" />
+    <TypeScriptCompile Include="Client\Typings\AngularJS\angular-resource.d.ts" />
+    <TypeScriptCompile Include="Client\Typings\AngularJS\angular-route.d.ts" />
+    <TypeScriptCompile Include="Client\Typings\AngularJS\angular-sanitize.d.ts" />
+    <TypeScriptCompile Include="Client\Typings\AngularJS\angular.d.ts" />
+    <TypeScriptCompile Include="Client\Typings\jQuery\jquery.d.ts" />
+    <TypeScriptCompile Include="Client\Typings\Restangular\restangular.d.ts" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Server\DataAccess\Migrations\201506011939539_InitialCreate.resx">
@@ -283,11 +283,50 @@
     <Error Condition="!Exists('..\packages\Antlr4.4.3.0\build\Antlr4.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Antlr4.4.3.0\build\Antlr4.targets'))" />
   </Target>
   <Import Project="..\packages\Antlr4.4.3.0\build\Antlr4.targets" Condition="Exists('..\packages\Antlr4.4.3.0\build\Antlr4.targets')" />
+  <PropertyGroup>
+    <CompileDependsOn>
+      $(CompileDependsOn);
+      GulpBuild;
+    </CompileDependsOn>
+    <CleanDependsOn>
+      $(CleanDependsOn);
+      GulpClean
+    </CleanDependsOn>
+    <CopyAllFilesToSingleFolderForPackageDependsOn>
+      CollectGulpOutput;
+      $(CopyAllFilesToSingleFolderForPackageDependsOn);
+    </CopyAllFilesToSingleFolderForPackageDependsOn>
+    <CopyAllFilesToSingleFolderForMsdeployDependsOn>
+      CollectGulpOutput;
+      $(CopyAllFilesToSingleFolderForPackageDependsOn);
+    </CopyAllFilesToSingleFolderForMsdeployDependsOn>
+  </PropertyGroup>
+  <Target Name="GulpBuild" DependsOnTargets="CompileTypeScript">
+    <Exec Command="npm install" />
+    <Exec Command="bower install" />
+    <Exec Command="gulp --mode $(ConfigurationName)" />
+  </Target>
+  <Target Name="GulpClean">
+    <Exec Command="gulp clean" />
+  </Target>
+  <Target Name="CollectGulpOutput">
+    <ItemGroup>
+      <_CustomFiles Include="wwwroot\**\*" />
+      <FilesForPackagingFromProject Include="%(_CustomFiles.Identity)">
+        <DestinationRelativePath>wwwroot\%(RecursiveDir)%(Filename)%(Extension)</DestinationRelativePath>
+      </FilesForPackagingFromProject>
+    </ItemGroup>
+    <Message Text="CollectGulpOutput list: %(_CustomFiles.Identity)" />
+  </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
   </Target>
-  <Target Name="AfterBuild">
-  </Target>
   -->
+  <Target Name="AfterBuild">
+    <ItemGroup>
+      <!-- what ever is in the wwwroot folder should be included in the project -->
+      <Content Include="wwwroot\**\*.*" />
+    </ItemGroup>
+  </Target>
 </Project>

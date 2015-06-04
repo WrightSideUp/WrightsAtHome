@@ -1,5 +1,5 @@
-﻿/// <reference path="../Typings/AngularJS/angular.d.ts" />
-/// <reference path="../Typings/Restangular/restangular.d.ts" />
+﻿/// <reference path="../../Typings/AngularJS/angular.d.ts" />
+/// <reference path="../../Typings/Restangular/restangular.d.ts" />
 
 module WrightsAtHome.Services {
 
