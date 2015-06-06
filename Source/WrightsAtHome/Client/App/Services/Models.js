@@ -7,7 +7,9 @@ var WrightsAtHome;
             }
             Utils.copyProperties = function (source, target) {
                 for (var prop in source) {
-                    target[prop] = source[prop];
+                    if (source.hasOwnProperty(prop)) {
+                        target[prop] = source[prop];
+                    }
                 }
             };
             return Utils;
@@ -31,27 +33,17 @@ var WrightsAtHome;
             return Device;
         })();
         Model.Device = Device;
-        (function (SensorType) {
-            SensorType[SensorType["Temperture"] = 0] = "Temperture";
-            SensorType[SensorType["Light"] = 1] = "Light";
-        })(Model.SensorType || (Model.SensorType = {}));
-        var SensorType = Model.SensorType;
-        (function (LightLevel) {
-            LightLevel[LightLevel["Daytime"] = 0] = "Daytime";
-            LightLevel[LightLevel["Night"] = 1] = "Night";
-        })(Model.LightLevel || (Model.LightLevel = {}));
-        var LightLevel = Model.LightLevel;
         var SensorReading = (function () {
             function SensorReading(object) {
                 Utils.copyProperties(object, this);
             }
             SensorReading.prototype.readingDisplayText = function () {
-                if (this.sensorType == 0 /* Temperture */)
-                    return this.temperature + '&deg;';
-                else if (this.lightReading = 0 /* Daytime */)
-                    return 'Daytime';
+                if (this.sensorType === "Temperture")
+                    return this.reading + "&deg;";
+                else if (this.reading >= 1)
+                    return "Daytime";
                 else
-                    return 'Night-time';
+                    return "Night-time";
             };
             SensorReading.apiResultTransformer = function (data) {
                 var result = Array();

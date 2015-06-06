@@ -10,10 +10,10 @@ var config = {
     release: "release",
     css: "css",
 
-    bootFile: appFolder + "index.html",
+    bootFile: "Client/index.html",
 
-    images: [appFolder + "Images/**/*.{gif,jpg,png}"],
-    imageBase: "Client/App/Images",
+    images: ["Client/Images/**/*.{gif,jpg,png}"],
+    imageBase: "Client/Images",
     imageDest: "img/",
 
     // The scripts we want Gulp to process
@@ -30,7 +30,7 @@ var config = {
 
     // The styles we want Gulp to process
     styles : [
-        appFolder + "main.scss"
+        "Client/Styles/" + "main.scss"
     ],
 
     wiredepOptions : {

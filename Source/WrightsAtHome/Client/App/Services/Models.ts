@@ -4,7 +4,9 @@ module WrightsAtHome.Model {
     class Utils {
         public static copyProperties(source: any, target: any): void {
             for (var prop in source) {
-                target[prop] = source[prop];
+                if (source.hasOwnProperty(prop)) {
+                    target[prop] = source[prop];
+                }
             }
         }
     }
@@ -37,34 +39,23 @@ module WrightsAtHome.Model {
         }
     }
 
-    export enum SensorType {
-        Temperture = 0,
-        Light = 1
-    }
-
-    export enum LightLevel {
-        Daytime = 0,
-        Night = 1
-    }
-
     export class SensorReading {
         id: number;
         name: string;
-        sensorType: SensorType;
-        temperature: number;
-        lightReading: LightLevel;
+        sensorType: string;
+        reading: number;
         smallImageUrl: string;
         largeImageUrl: string;
 
         readingDisplayText() {
 
-            if (this.sensorType == SensorType.Temperture)
-                return this.temperature + '&deg;';
+            if (this.sensorType === "Temperture")
+                return this.reading + "&deg;";
             else
-                if (this.lightReading = LightLevel.Daytime)
-                    return 'Daytime';
+                if (this.reading >= 1)
+                    return "Daytime";
                 else
-                    return 'Night-time';
+                    return "Night-time";
         }
 
         constructor(object) {

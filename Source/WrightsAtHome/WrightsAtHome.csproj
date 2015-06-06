@@ -142,24 +142,30 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Client\App\Images\devices_large\Fountain.png" />
-    <Content Include="Client\App\Images\devices_large\LandscapeLights.png" />
-    <Content Include="Client\App\Images\devices_large\LightSensor.png" />
-    <Content Include="Client\App\Images\devices_large\PoolHeater.png" />
-    <Content Include="Client\App\Images\devices_large\PoolLight.png" />
-    <Content Include="Client\App\Images\devices_large\PoolPump.png" />
-    <Content Include="Client\App\Images\devices_large\Thermometer.png" />
-    <Content Include="Client\App\Images\devices_large\XmasLights.png" />
-    <Content Include="Client\App\Images\devices_small\Fountain.png" />
-    <Content Include="Client\App\Images\devices_small\LandscapeLights.png" />
-    <Content Include="Client\App\Images\devices_small\LightSensor.png" />
-    <Content Include="Client\App\Images\devices_small\PoolHeater.png" />
-    <Content Include="Client\App\Images\devices_small\PoolLight.png" />
-    <Content Include="Client\App\Images\devices_small\PoolPump.png" />
-    <Content Include="Client\App\Images\devices_small\Thermometer.png" />
-    <Content Include="Client\App\Images\devices_small\XmasLights.png" />
-    <Content Include="Client\App\Images\Header.jpg" />
-    <Content Include="Client\App\index.html" />
+    <Content Include="Client\Images\devices_large\Fountain.png" />
+    <Content Include="Client\Images\devices_large\LandscapeLights.png" />
+    <Content Include="Client\Images\devices_large\LightSensor.png" />
+    <Content Include="Client\Images\devices_large\PoolHeater.png" />
+    <Content Include="Client\Images\devices_large\PoolLight.png" />
+    <Content Include="Client\Images\devices_large\PoolPump.png" />
+    <Content Include="Client\Images\devices_large\Thermometer.png" />
+    <Content Include="Client\Images\devices_large\XmasLights.png" />
+    <Content Include="Client\Images\devices_small\Fountain.png" />
+    <Content Include="Client\Images\devices_small\LandscapeLights.png" />
+    <Content Include="Client\Images\devices_small\LightSensor.png" />
+    <Content Include="Client\Images\devices_small\PoolHeater.png" />
+    <Content Include="Client\Images\devices_small\PoolLight.png" />
+    <Content Include="Client\Images\devices_small\PoolPump.png" />
+    <Content Include="Client\Images\devices_small\Thermometer.png" />
+    <Content Include="Client\Images\devices_small\XmasLights.png" />
+    <Content Include="Client\Images\Header.jpg" />
+    <Content Include="Client\index.html" />
+    <Content Include="Client\Styles\main.css">
+      <DependentUpon>main.scss</DependentUpon>
+    </Content>
+    <Content Include="Client\Styles\main.min.css">
+      <DependentUpon>main.css</DependentUpon>
+    </Content>
     <Content Include="Gulpfile.config.js" />
     <Content Include="Gulpfile.js" />
     <Content Include="Web.config" />
@@ -211,11 +217,14 @@
     <Content Include="package.json" />
     <Content Include="packages.config" />
     <Content Include="bower.json" />
-    <Content Include="Client\App\main.scss" />
+    <Content Include="Client\Styles\main.scss" />
     <Antlr4 Include="Server\Domain\Services\Trigger\Parser\Grammar\Trigger.g4">
       <Generator>MSBuild:Compile</Generator>
       <CustomToolNamespace>WrightsAtHome.Server.Domain.Services.Trigger.Parser.Grammar</CustomToolNamespace>
     </Antlr4>
+    <Content Include="Client\Styles\main.css.map">
+      <DependentUpon>main.css</DependentUpon>
+    </Content>
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

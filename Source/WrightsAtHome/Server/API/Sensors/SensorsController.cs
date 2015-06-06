@@ -6,7 +6,7 @@ using System.Web.Http;
 
 namespace WrightsAtHome.Server.API.Sensors
 {
-    [Route("api/[controller]")]
+    [RoutePrefix("api/[controller]")]
     public class SensorsController : ApiController
     {
         private readonly List<SensorReadingInfo> data = new List<SensorReadingInfo>
@@ -17,7 +17,6 @@ namespace WrightsAtHome.Server.API.Sensors
         };
 
         // GET: api/sensors
-        [HttpGet]
         public IEnumerable<SensorReadingInfo> Get()
         {
             return data;
