@@ -142,32 +142,45 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Client\Images\devices_large\Fountain.png" />
-    <Content Include="Client\Images\devices_large\LandscapeLights.png" />
-    <Content Include="Client\Images\devices_large\LightSensor.png" />
-    <Content Include="Client\Images\devices_large\PoolHeater.png" />
-    <Content Include="Client\Images\devices_large\PoolLight.png" />
-    <Content Include="Client\Images\devices_large\PoolPump.png" />
-    <Content Include="Client\Images\devices_large\Thermometer.png" />
-    <Content Include="Client\Images\devices_large\XmasLights.png" />
-    <Content Include="Client\Images\devices_small\Fountain.png" />
-    <Content Include="Client\Images\devices_small\LandscapeLights.png" />
-    <Content Include="Client\Images\devices_small\LightSensor.png" />
-    <Content Include="Client\Images\devices_small\PoolHeater.png" />
-    <Content Include="Client\Images\devices_small\PoolLight.png" />
-    <Content Include="Client\Images\devices_small\PoolPump.png" />
-    <Content Include="Client\Images\devices_small\Thermometer.png" />
-    <Content Include="Client\Images\devices_small\XmasLights.png" />
-    <Content Include="Client\Images\Header.jpg" />
-    <Content Include="Client\index.html" />
-    <Content Include="Client\Styles\main.css">
-      <DependentUpon>main.scss</DependentUpon>
+    <Content Include="client\client\app\admin\admin.controller.spec.js" />
+    <Content Include="client\client\app\admin\admin.html" />
+    <Content Include="client\client\app\admin\admin.route.spec.js" />
+    <Content Include="client\client\app\blocks\exception\exception-handler.provider.spec.js" />
+    <Content Include="client\client\app\core\404.html" />
+    <Content Include="client\client\app\core\core.route.spec.js" />
+    <Content Include="client\client\app\dashboard\dashboard.controller.spec.js" />
+    <Content Include="client\client\app\dashboard\dashboard.html" />
+    <Content Include="client\client\app\dashboard\dashboard.route.spec.js" />
+    <Content Include="client\client\app\layout\ht-sidebar.directive.spec.js" />
+    <Content Include="client\client\app\layout\ht-top-nav.html" />
+    <Content Include="client\client\app\layout\shell.controller.spec.js" />
+    <Content Include="client\client\app\layout\shell.html" />
+    <Content Include="client\client\app\layout\sidebar.controller.spec.js" />
+    <Content Include="client\client\app\layout\sidebar.html" />
+    <Content Include="client\client\app\widgets\widget-header.html" />
+    <Content Include="client\client\images\AngularJS-small.png" />
+    <Content Include="client\client\images\busy.gif" />
+    <Content Include="client\client\images\gulp-tiny.png" />
+    <Content Include="client\client\images\icon.png" />
+    <Content Include="client\client\index.html" />
+    <Content Include="client\client\specs.html" />
+    <Content Include="client\client\styles\styles.css">
+      <DependentUpon>styles.scss</DependentUpon>
     </Content>
-    <Content Include="Client\Styles\main.min.css">
-      <DependentUpon>main.css</DependentUpon>
+    <Content Include="client\client\styles\styles.min.css">
+      <DependentUpon>styles.css</DependentUpon>
     </Content>
-    <Content Include="Gulpfile.config.js" />
+    <Content Include="client\client\test-helpers\bind-polyfill.js" />
+    <Content Include="client\client\test-helpers\mock-data.js" />
+    <Content Include="client\devserver\app.js" />
+    <Content Include="client\devserver\data.js" />
+    <Content Include="client\devserver\favicon.ico" />
+    <Content Include="client\devserver\routes.js" />
+    <Content Include="client\devserver\utils\notfound.js" />
+    <Content Include="gulp.config.js" />
+    <Content Include="gulp.png" />
     <Content Include="Gulpfile.js" />
+    <Content Include="karma.conf.js" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -217,14 +230,24 @@
     <Content Include="package.json" />
     <Content Include="packages.config" />
     <Content Include="bower.json" />
-    <Content Include="Client\Styles\main.scss" />
     <Antlr4 Include="Server\Domain\Services\Trigger\Parser\Grammar\Trigger.g4">
       <Generator>MSBuild:Compile</Generator>
       <CustomToolNamespace>WrightsAtHome.Server.Domain.Services.Trigger.Parser.Grammar</CustomToolNamespace>
     </Antlr4>
-    <Content Include="Client\Styles\main.css.map">
-      <DependentUpon>main.css</DependentUpon>
+    <Content Include=".jscsrc" />
+    <Content Include=".jshintrc" />
+    <Content Include="tsd.json" />
+    <Content Include="tslint.json" />
+    <Content Include="client\client\styles\styles.css.map">
+      <DependentUpon>styles.css</DependentUpon>
     </Content>
+    <None Include="client\client\styles\styles.scss" />
+    <Content Include="client\client\tsconfig.json" />
+    <Content Include="client\devserver\app.js.map" />
+    <Content Include="client\devserver\data.js.map" />
+    <Content Include="client\devserver\routes.js.map" />
+    <Content Include="client\devserver\tsconfig.json" />
+    <Content Include="client\devserver\utils\notfound.js.map" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -233,24 +256,52 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <TypeScriptCompile Include="Client\App\Dashboard\DashboardCtrl.ts" />
-    <TypeScriptCompile Include="Client\App\Dashboard\ScheduleCtrl.ts" />
-    <TypeScriptCompile Include="Client\App\Dashboard\StateChange.ts" />
-    <TypeScriptCompile Include="Client\App\app.ts" />
-    <TypeScriptCompile Include="Client\App\Services\devicesService.ts" />
-    <TypeScriptCompile Include="Client\App\Main\MainCtrl.ts" />
-    <TypeScriptCompile Include="Client\App\Services\Models.ts" />
-    <TypeScriptCompile Include="Client\App\Services\sensorsService.ts" />
-    <TypeScriptCompile Include="Client\Typings\Angular-UI-Bootstrap\angular-ui-bootstrap.d.ts" />
-    <TypeScriptCompile Include="Client\Typings\AngularJS\angular-animate.d.ts" />
-    <TypeScriptCompile Include="Client\Typings\AngularJS\angular-cookies.d.ts" />
-    <TypeScriptCompile Include="Client\Typings\AngularJS\angular-mocks.d.ts" />
-    <TypeScriptCompile Include="Client\Typings\AngularJS\angular-resource.d.ts" />
-    <TypeScriptCompile Include="Client\Typings\AngularJS\angular-route.d.ts" />
-    <TypeScriptCompile Include="Client\Typings\AngularJS\angular-sanitize.d.ts" />
-    <TypeScriptCompile Include="Client\Typings\AngularJS\angular.d.ts" />
-    <TypeScriptCompile Include="Client\Typings\jQuery\jquery.d.ts" />
-    <TypeScriptCompile Include="Client\Typings\Restangular\restangular.d.ts" />
+    <TypeScriptCompile Include="client\client\app\admin\admin.controller.ts" />
+    <TypeScriptCompile Include="client\client\app\admin\admin.module.ts" />
+    <TypeScriptCompile Include="client\client\app\admin\admin.route.ts" />
+    <TypeScriptCompile Include="client\client\app\app.module.ts" />
+    <TypeScriptCompile Include="client\client\app\blocks\exception\exception-handler.provider.ts" />
+    <TypeScriptCompile Include="client\client\app\blocks\exception\exception.module.ts" />
+    <TypeScriptCompile Include="client\client\app\blocks\exception\exception.ts" />
+    <TypeScriptCompile Include="client\client\app\blocks\logger\logger.module.ts" />
+    <TypeScriptCompile Include="client\client\app\blocks\logger\logger.ts" />
+    <TypeScriptCompile Include="client\client\app\blocks\router\router-helper.module.ts" />
+    <TypeScriptCompile Include="client\client\app\blocks\router\router-helper.service.ts" />
+    <TypeScriptCompile Include="client\client\app\core\config.ts" />
+    <TypeScriptCompile Include="client\client\app\core\constants.ts" />
+    <TypeScriptCompile Include="client\client\app\core\core.module.ts" />
+    <TypeScriptCompile Include="client\client\app\core\core.route.ts" />
+    <TypeScriptCompile Include="client\client\app\core\dataservice.ts" />
+    <TypeScriptCompile Include="client\client\app\dashboard\dashboard.controller.ts" />
+    <TypeScriptCompile Include="client\client\app\dashboard\dashboard.module.ts" />
+    <TypeScriptCompile Include="client\client\app\dashboard\dashboard.route.ts" />
+    <TypeScriptCompile Include="client\client\app\layout\ht-sidebar.directive.ts" />
+    <TypeScriptCompile Include="client\client\app\layout\ht-top-nav.directive.ts" />
+    <TypeScriptCompile Include="client\client\app\layout\layout.module.ts" />
+    <TypeScriptCompile Include="client\client\app\layout\shell.controller.ts" />
+    <TypeScriptCompile Include="client\client\app\layout\sidebar.controller.ts" />
+    <TypeScriptCompile Include="client\client\app\widgets\ht-widget-header.directive.ts" />
+    <TypeScriptCompile Include="client\client\app\widgets\widgets.module.ts" />
+    <TypeScriptCompile Include="client\client\tsd.d.ts" />
+    <TypeScriptCompile Include="client\devserver\app.ts" />
+    <TypeScriptCompile Include="client\devserver\data.ts" />
+    <TypeScriptCompile Include="client\devserver\routes.ts" />
+    <TypeScriptCompile Include="client\devserver\tsd-server.d.ts" />
+    <TypeScriptCompile Include="client\devserver\utils\notfound.ts" />
+    <TypeScriptCompile Include="typings\Angular-UI-Bootstrap\angular-ui-bootstrap.d.ts" />
+    <TypeScriptCompile Include="typings\angular-ui-router\angular-ui-router.d.ts" />
+    <TypeScriptCompile Include="typings\AngularJS\angular-animate.d.ts" />
+    <TypeScriptCompile Include="typings\AngularJS\angular-cookies.d.ts" />
+    <TypeScriptCompile Include="typings\AngularJS\angular-mocks.d.ts" />
+    <TypeScriptCompile Include="typings\AngularJS\angular-resource.d.ts" />
+    <TypeScriptCompile Include="typings\AngularJS\angular-route.d.ts" />
+    <TypeScriptCompile Include="typings\AngularJS\angular-sanitize.d.ts" />
+    <TypeScriptCompile Include="typings\AngularJS\angular.d.ts" />
+    <TypeScriptCompile Include="typings\bootstrap\bootstrap.d.ts" />
+    <TypeScriptCompile Include="typings\jQuery\jquery.d.ts" />
+    <TypeScriptCompile Include="typings\moment\moment.d.ts" />
+    <TypeScriptCompile Include="typings\Restangular\restangular.d.ts" />
+    <TypeScriptCompile Include="typings\toastr\toastr.d.ts" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Server\DataAccess\Migrations\201506011939539_InitialCreate.resx">
