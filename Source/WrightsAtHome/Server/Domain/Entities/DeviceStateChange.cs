@@ -1,8 +1,9 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace WrightsAtHome.Server.Domain.Entities
 {
-    public class DeviceStateChange
+    public class DeviceStateChange : IBaseEntity
     {
         public int Id { get; set; }
 
@@ -15,5 +16,12 @@ namespace WrightsAtHome.Server.Domain.Entities
         public DeviceState BeforeState { get; set; }
 
         public DeviceState AfterState { get; set; }
+
+        public DeviceTrigger FromTrigger { get; set; }
+
+        [ConcurrencyCheck]
+        public DateTime LastModified { get; set; }
+
+        public int LastModifiedUserId { get; set; }
     }
 }

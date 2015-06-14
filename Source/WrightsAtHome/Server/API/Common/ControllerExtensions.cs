@@ -6,11 +6,11 @@ namespace WrightsAtHome.Server.API.Common
     {
         public static string DeviceImageUrlLarge(this ApiController controller, string imageName)
         {
-            return "img/devices_large/" + imageName;
+            return "images/devices_large/" + imageName;
         }
         public static string DeviceImageUrlSmall(this ApiController controller, string imageName)
         {
-            return "img/devices_small/" + imageName;
+            return "images/devices_small/" + imageName;
         }
     }
 }

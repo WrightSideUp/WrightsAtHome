@@ -20,13 +20,16 @@ namespace WrightsAtHome.Server.DataAccess.Configuration
                 .IsRequired()
                 .HasMaxLength(30);
 
+            Property(d => d.Sequence)
+                .IsRequired();
+
             Property(d => d.ImageName)
                 .IsRequired()
                 .HasMaxLength(20);
 
-            Property(d => d.StartTriggerText).HasMaxLength(512);
+            Property(d => d.LastModified).IsRequired();
 
-            Property(d => d.EndTriggerText).HasMaxLength(512);
+            Property(d => d.LastModifiedUserId).IsRequired();
         }
     }
 }

@@ -53,7 +53,6 @@ namespace WrightsAtHome.Server.Domain.Services.Trigger.Parser.Generated
 
         public override string GrammarFileName { get { return "Trigger.g4"; } }
 
-        [Obsolete]
         public override string[] TokenNames { get { return tokenNames; } }
 
         public override string[] RuleNames { get { return ruleNames; } }

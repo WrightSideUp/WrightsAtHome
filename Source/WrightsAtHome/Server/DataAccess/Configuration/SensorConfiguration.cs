@@ -19,6 +19,9 @@ namespace WrightsAtHome.Server.DataAccess.Configuration
                 .WithMany(st => st.Sensors)
                 .Map(m => m.MapKey("SensorTypeId"));
 
+            Property(e => e.LastModifiedUserId).IsRequired();
+            Property(e => e.LastModified).IsRequired();
+
         }
     }
 }

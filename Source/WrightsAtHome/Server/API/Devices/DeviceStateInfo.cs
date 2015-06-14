@@ -6,6 +6,6 @@
 
         public string Name { get; set; }
 
-        public int StateNumber { get; set; }
+        public int Sequence { get; set; }
     }
 }

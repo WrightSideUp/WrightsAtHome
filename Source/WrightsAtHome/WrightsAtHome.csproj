@@ -66,6 +66,18 @@
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Hangfire.Autofac, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\HangFire.Autofac.1.1.0\lib\net45\Hangfire.Autofac.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Hangfire.Core, Version=1.4.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Hangfire.Core.1.4.3\lib\net45\Hangfire.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Hangfire.SqlServer, Version=1.4.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Hangfire.SqlServer.1.4.3\lib\net45\Hangfire.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.1\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
       <Private>True</Private>
@@ -99,8 +111,16 @@
       <HintPath>..\packages\Microsoft.Owin.Security.OAuth.2.1.0\lib\net45\Microsoft.Owin.Security.OAuth.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <HintPath>..\packages\NLog.4.0.0\lib\net45\NLog.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5, processorArchitecture=MSIL">
@@ -112,6 +132,11 @@
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Web.Cors, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Cors.5.2.3\lib\net45\System.Web.Cors.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -121,8 +146,16 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.Helpers.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Web.Http, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.3\lib\net45\System.Web.Http.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Http.Cors, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Cors.5.2.3\lib\net45\System.Web.Http.Cors.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Web.Http.Owin, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -131,6 +164,26 @@
     </Reference>
     <Reference Include="System.Web.Http.WebHost, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.3\lib\net45\System.Web.Http.WebHost.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.3\lib\net45\System.Web.Mvc.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.3\lib\net45\System.Web.Razor.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Xml.Linq" />
@@ -142,45 +195,7 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="client\client\app\admin\admin.controller.spec.js" />
-    <Content Include="client\client\app\admin\admin.html" />
-    <Content Include="client\client\app\admin\admin.route.spec.js" />
-    <Content Include="client\client\app\blocks\exception\exception-handler.provider.spec.js" />
-    <Content Include="client\client\app\core\404.html" />
-    <Content Include="client\client\app\core\core.route.spec.js" />
-    <Content Include="client\client\app\dashboard\dashboard.controller.spec.js" />
-    <Content Include="client\client\app\dashboard\dashboard.html" />
-    <Content Include="client\client\app\dashboard\dashboard.route.spec.js" />
-    <Content Include="client\client\app\layout\ht-sidebar.directive.spec.js" />
-    <Content Include="client\client\app\layout\ht-top-nav.html" />
-    <Content Include="client\client\app\layout\shell.controller.spec.js" />
-    <Content Include="client\client\app\layout\shell.html" />
-    <Content Include="client\client\app\layout\sidebar.controller.spec.js" />
-    <Content Include="client\client\app\layout\sidebar.html" />
-    <Content Include="client\client\app\widgets\widget-header.html" />
-    <Content Include="client\client\images\AngularJS-small.png" />
-    <Content Include="client\client\images\busy.gif" />
-    <Content Include="client\client\images\gulp-tiny.png" />
-    <Content Include="client\client\images\icon.png" />
-    <Content Include="client\client\index.html" />
-    <Content Include="client\client\specs.html" />
-    <Content Include="client\client\styles\styles.css">
-      <DependentUpon>styles.scss</DependentUpon>
-    </Content>
-    <Content Include="client\client\styles\styles.min.css">
-      <DependentUpon>styles.css</DependentUpon>
-    </Content>
-    <Content Include="client\client\test-helpers\bind-polyfill.js" />
-    <Content Include="client\client\test-helpers\mock-data.js" />
-    <Content Include="client\devserver\app.js" />
-    <Content Include="client\devserver\data.js" />
-    <Content Include="client\devserver\favicon.ico" />
-    <Content Include="client\devserver\routes.js" />
-    <Content Include="client\devserver\utils\notfound.js" />
-    <Content Include="gulp.config.js" />
-    <Content Include="gulp.png" />
-    <Content Include="Gulpfile.js" />
-    <Content Include="karma.conf.js" />
+    <Content Include="Index.html" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -193,28 +208,42 @@
     <Compile Include="Server\API\Devices\DeviceStateRequest.cs" />
     <Compile Include="Server\API\Security\User.cs" />
     <Compile Include="Server\API\Sensors\SensorReadingInfo.cs" />
-    <Compile Include="Server\API\Sensors\SensorsController.cs" />
+    <Compile Include="Server\API\Sensors\SensorReadingsController.cs" />
     <Compile Include="Server\DataAccess\AtHomeDbContext.cs" />
     <Compile Include="Server\DataAccess\Configuration\AtHomeDbConfiguration.cs" />
     <Compile Include="Server\DataAccess\Configuration\DeviceConfiguration.cs" />
     <Compile Include="Server\DataAccess\Configuration\DeviceStateChangeConfiguration.cs" />
     <Compile Include="Server\DataAccess\Configuration\DeviceStateConfiguration.cs" />
+    <Compile Include="Server\DataAccess\Configuration\DeviceTriggerConfiguration.cs" />
+    <Compile Include="Server\DataAccess\Configuration\DeviceTriggerWaitConfiguration.cs" />
     <Compile Include="Server\DataAccess\Configuration\SensorConfiguration.cs" />
     <Compile Include="Server\DataAccess\Configuration\SensorReadingConfiguration.cs" />
     <Compile Include="Server\DataAccess\Configuration\SensorTypeConfiguration.cs" />
     <Compile Include="Server\DataAccess\DataAccessModule.cs" />
-    <Compile Include="Server\DataAccess\Migrations\201506011939539_InitialCreate.cs" />
-    <Compile Include="Server\DataAccess\Migrations\201506011939539_InitialCreate.Designer.cs">
-      <DependentUpon>201506011939539_InitialCreate.cs</DependentUpon>
+    <Compile Include="Server\DataAccess\Migrations\201506131457231_Initial.cs" />
+    <Compile Include="Server\DataAccess\Migrations\201506131457231_Initial.Designer.cs">
+      <DependentUpon>201506131457231_Initial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Server\DataAccess\Migrations\201506141339516_TriggerWait.cs" />
+    <Compile Include="Server\DataAccess\Migrations\201506141339516_TriggerWait.Designer.cs">
+      <DependentUpon>201506141339516_TriggerWait.cs</DependentUpon>
     </Compile>
     <Compile Include="Server\DataAccess\Migrations\Configuration.cs" />
     <Compile Include="Server\Domain\DomainModule.cs" />
+    <Compile Include="Server\Domain\Entities\DeviceTriggerWait.cs" />
+    <Compile Include="Server\Domain\Entities\IBaseEntity.cs" />
     <Compile Include="Server\Domain\Entities\Device.cs" />
     <Compile Include="Server\Domain\Entities\DeviceState.cs" />
     <Compile Include="Server\Domain\Entities\DeviceStateChange.cs" />
+    <Compile Include="Server\Domain\Entities\DeviceTrigger.cs" />
     <Compile Include="Server\Domain\Entities\Sensor.cs" />
     <Compile Include="Server\Domain\Entities\SensorReading.cs" />
     <Compile Include="Server\Domain\Entities\SensorType.cs" />
+    <Compile Include="Server\Domain\Services\Devices\DeviceStateService.cs" />
+    <Compile Include="Server\Domain\Services\Devices\DeviceTriggerService.cs" />
+    <Compile Include="Server\Domain\Services\Jobs\SensorManager.cs" />
+    <Compile Include="Server\Domain\Services\Jobs\TriggerManager.cs" />
+    <Compile Include="Server\Domain\Services\Sensors\SensorService.cs" />
     <Compile Include="Server\Domain\Services\Trigger\Parser\Generated\ITriggerListener.cs" />
     <Compile Include="Server\Domain\Services\Trigger\Parser\Generated\TriggerBaseListener.cs" />
     <Compile Include="Server\Domain\Services\Trigger\Parser\Generated\TriggerLexer.cs" />
@@ -227,27 +256,11 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="package.json" />
     <Content Include="packages.config" />
-    <Content Include="bower.json" />
     <Antlr4 Include="Server\Domain\Services\Trigger\Parser\Grammar\Trigger.g4">
       <Generator>MSBuild:Compile</Generator>
       <CustomToolNamespace>WrightsAtHome.Server.Domain.Services.Trigger.Parser.Grammar</CustomToolNamespace>
     </Antlr4>
-    <Content Include=".jscsrc" />
-    <Content Include=".jshintrc" />
-    <Content Include="tsd.json" />
-    <Content Include="tslint.json" />
-    <Content Include="client\client\styles\styles.css.map">
-      <DependentUpon>styles.css</DependentUpon>
-    </Content>
-    <None Include="client\client\styles\styles.scss" />
-    <Content Include="client\client\tsconfig.json" />
-    <Content Include="client\devserver\app.js.map" />
-    <Content Include="client\devserver\data.js.map" />
-    <Content Include="client\devserver\routes.js.map" />
-    <Content Include="client\devserver\tsconfig.json" />
-    <Content Include="client\devserver\utils\notfound.js.map" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -256,59 +269,13 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <TypeScriptCompile Include="client\client\app\admin\admin.controller.ts" />
-    <TypeScriptCompile Include="client\client\app\admin\admin.module.ts" />
-    <TypeScriptCompile Include="client\client\app\admin\admin.route.ts" />
-    <TypeScriptCompile Include="client\client\app\app.module.ts" />
-    <TypeScriptCompile Include="client\client\app\blocks\exception\exception-handler.provider.ts" />
-    <TypeScriptCompile Include="client\client\app\blocks\exception\exception.module.ts" />
-    <TypeScriptCompile Include="client\client\app\blocks\exception\exception.ts" />
-    <TypeScriptCompile Include="client\client\app\blocks\logger\logger.module.ts" />
-    <TypeScriptCompile Include="client\client\app\blocks\logger\logger.ts" />
-    <TypeScriptCompile Include="client\client\app\blocks\router\router-helper.module.ts" />
-    <TypeScriptCompile Include="client\client\app\blocks\router\router-helper.service.ts" />
-    <TypeScriptCompile Include="client\client\app\core\config.ts" />
-    <TypeScriptCompile Include="client\client\app\core\constants.ts" />
-    <TypeScriptCompile Include="client\client\app\core\core.module.ts" />
-    <TypeScriptCompile Include="client\client\app\core\core.route.ts" />
-    <TypeScriptCompile Include="client\client\app\core\dataservice.ts" />
-    <TypeScriptCompile Include="client\client\app\dashboard\dashboard.controller.ts" />
-    <TypeScriptCompile Include="client\client\app\dashboard\dashboard.module.ts" />
-    <TypeScriptCompile Include="client\client\app\dashboard\dashboard.route.ts" />
-    <TypeScriptCompile Include="client\client\app\layout\ht-sidebar.directive.ts" />
-    <TypeScriptCompile Include="client\client\app\layout\ht-top-nav.directive.ts" />
-    <TypeScriptCompile Include="client\client\app\layout\layout.module.ts" />
-    <TypeScriptCompile Include="client\client\app\layout\shell.controller.ts" />
-    <TypeScriptCompile Include="client\client\app\layout\sidebar.controller.ts" />
-    <TypeScriptCompile Include="client\client\app\widgets\ht-widget-header.directive.ts" />
-    <TypeScriptCompile Include="client\client\app\widgets\widgets.module.ts" />
-    <TypeScriptCompile Include="client\client\tsd.d.ts" />
-    <TypeScriptCompile Include="client\devserver\app.ts" />
-    <TypeScriptCompile Include="client\devserver\data.ts" />
-    <TypeScriptCompile Include="client\devserver\routes.ts" />
-    <TypeScriptCompile Include="client\devserver\tsd-server.d.ts" />
-    <TypeScriptCompile Include="client\devserver\utils\notfound.ts" />
-    <TypeScriptCompile Include="typings\Angular-UI-Bootstrap\angular-ui-bootstrap.d.ts" />
-    <TypeScriptCompile Include="typings\angular-ui-router\angular-ui-router.d.ts" />
-    <TypeScriptCompile Include="typings\AngularJS\angular-animate.d.ts" />
-    <TypeScriptCompile Include="typings\AngularJS\angular-cookies.d.ts" />
-    <TypeScriptCompile Include="typings\AngularJS\angular-mocks.d.ts" />
-    <TypeScriptCompile Include="typings\AngularJS\angular-resource.d.ts" />
-    <TypeScriptCompile Include="typings\AngularJS\angular-route.d.ts" />
-    <TypeScriptCompile Include="typings\AngularJS\angular-sanitize.d.ts" />
-    <TypeScriptCompile Include="typings\AngularJS\angular.d.ts" />
-    <TypeScriptCompile Include="typings\bootstrap\bootstrap.d.ts" />
-    <TypeScriptCompile Include="typings\jQuery\jquery.d.ts" />
-    <TypeScriptCompile Include="typings\moment\moment.d.ts" />
-    <TypeScriptCompile Include="typings\Restangular\restangular.d.ts" />
-    <TypeScriptCompile Include="typings\toastr\toastr.d.ts" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Server\DataAccess\Migrations\201506011939539_InitialCreate.resx">
-      <DependentUpon>201506011939539_InitialCreate.cs</DependentUpon>
+    <EmbeddedResource Include="Server\DataAccess\Migrations\201506131457231_Initial.resx">
+      <DependentUpon>201506131457231_Initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Server\DataAccess\Migrations\201506141339516_TriggerWait.resx">
+      <DependentUpon>201506141339516_TriggerWait.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
@@ -343,50 +310,11 @@
     <Error Condition="!Exists('..\packages\Antlr4.4.3.0\build\Antlr4.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Antlr4.4.3.0\build\Antlr4.targets'))" />
   </Target>
   <Import Project="..\packages\Antlr4.4.3.0\build\Antlr4.targets" Condition="Exists('..\packages\Antlr4.4.3.0\build\Antlr4.targets')" />
-  <PropertyGroup>
-    <CompileDependsOn>
-      $(CompileDependsOn);
-      GulpBuild;
-    </CompileDependsOn>
-    <CleanDependsOn>
-      $(CleanDependsOn);
-      GulpClean
-    </CleanDependsOn>
-    <CopyAllFilesToSingleFolderForPackageDependsOn>
-      CollectGulpOutput;
-      $(CopyAllFilesToSingleFolderForPackageDependsOn);
-    </CopyAllFilesToSingleFolderForPackageDependsOn>
-    <CopyAllFilesToSingleFolderForMsdeployDependsOn>
-      CollectGulpOutput;
-      $(CopyAllFilesToSingleFolderForPackageDependsOn);
-    </CopyAllFilesToSingleFolderForMsdeployDependsOn>
-  </PropertyGroup>
-  <Target Name="GulpBuild" DependsOnTargets="CompileTypeScript">
-    <Exec Command="npm install" />
-    <Exec Command="bower install" />
-    <Exec Command="gulp --mode $(ConfigurationName)" />
-  </Target>
-  <Target Name="GulpClean">
-    <Exec Command="gulp clean" />
-  </Target>
-  <Target Name="CollectGulpOutput">
-    <ItemGroup>
-      <_CustomFiles Include="wwwroot\**\*" />
-      <FilesForPackagingFromProject Include="%(_CustomFiles.Identity)">
-        <DestinationRelativePath>wwwroot\%(RecursiveDir)%(Filename)%(Extension)</DestinationRelativePath>
-      </FilesForPackagingFromProject>
-    </ItemGroup>
-    <Message Text="CollectGulpOutput list: %(_CustomFiles.Identity)" />
-  </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
   </Target>
   -->
   <Target Name="AfterBuild">
-    <ItemGroup>
-      <!-- what ever is in the wwwroot folder should be included in the project -->
-      <Content Include="wwwroot\**\*.*" />
-    </ItemGroup>
   </Target>
 </Project>

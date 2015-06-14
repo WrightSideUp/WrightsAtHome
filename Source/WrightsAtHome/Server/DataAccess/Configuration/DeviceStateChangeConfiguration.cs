@@ -24,6 +24,13 @@ namespace WrightsAtHome.Server.DataAccess.Configuration
                 .Map(m => m.MapKey("AfterStateId"))
                 .WillCascadeOnDelete(false);
 
+            HasOptional(sc => sc.FromTrigger)
+                .WithMany()
+                .Map(m => m.MapKey("DeviceTriggerId"))
+                .WillCascadeOnDelete(false);
+
+            Property(e => e.LastModifiedUserId).IsRequired();
+            Property(e => e.LastModified).IsRequired();
         }
     }
 }

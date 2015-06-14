@@ -9,8 +9,11 @@ namespace WrightsAtHome.Server.Domain.Services.Trigger
 {
     public interface ITriggerCompiler
     {
-        Func<bool> CompileStartTrigger(string trigger);
-        Func<DateTime, bool> CompileEndTrigger(string trigger);
+        bool IsAfterTrigger(string trigger);
+
+        Func<bool> CompileAtOrWhenTrigger(string trigger);
+
+        Func<DateTime, bool> CompileAfterTrigger(string trigger);
     }
 
     public class TriggerCompiler : ITriggerCompiler
@@ -21,8 +24,19 @@ namespace WrightsAtHome.Server.Domain.Services.Trigger
         {
             this.helpers = helpers;
         }
-        public Func<bool> CompileStartTrigger(string trigger)
+
+        public bool IsAfterTrigger(string trigger)
         {
+            return trigger.ToLower().Trim().StartsWith("after ");
+        }
+
+        public Func<bool> CompileAtOrWhenTrigger(string trigger)
+        {
+            if (IsAfterTrigger(trigger))
+            {
+                throw new ArgumentException("AFTER trigger sent to CompileAtOrWhenTrigger", "trigger");
+            }
+            
             var parser = SetupParser(trigger);
 
             var tree = parser.trigger();
@@ -39,7 +53,7 @@ namespace WrightsAtHome.Server.Domain.Services.Trigger
 
             return func;
         }
-        public Func<DateTime, bool> CompileEndTrigger(string trigger)
+        public Func<DateTime, bool> CompileAfterTrigger(string trigger)
         {
             var parser = SetupParser(trigger);
 

@@ -1,26 +1,34 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace WrightsAtHome.Server.Domain.Entities
 {
-    public class Device
+    public class Device : IBaseEntity
     {
         public int Id { get; set; }
-        
+
         public string Name { get; set; }
-        
+
+        public int Sequence { get; set; }
+
         public string ImageName { get; set; }
         
-        public List<DeviceState> PossibleStates { get; private set; }
+        public IList<DeviceState> PossibleStates { get; private set; }
 
-        public string StartTriggerText { get; set; }
-        
-        public string EndTriggerText { get; set; }
+        public IList<DeviceTrigger> Triggers { get; set; }
 
-        public List<DeviceStateChange> StateChanges { get; set; }
-        
+        public IList<DeviceStateChange> StateChanges { get; set; }
+
+        [ConcurrencyCheck]
+        public DateTime LastModified { get; set; }
+
+        public int LastModifiedUserId { get; set; }
+
         public Device()
         {
             PossibleStates = new List<DeviceState>();
+            Triggers = new List<DeviceTrigger>();
         }
 
         public Device(params DeviceState[] possibleStates)

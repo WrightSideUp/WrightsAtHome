@@ -33,10 +33,12 @@ namespace WrightsAtHome.Server.API.Devices
                     SmallImageUrl = this.DeviceImageUrlSmall(d.ImageName),
                     PossibleStates = d.PossibleStates.Select(ds => new DeviceStateInfo
                                         {
-                                            Id = ds.Id, Name = ds.Name, StateNumber = ds.StateNumber
+                                            Id = ds.Id,
+                                            Name = ds.Name,
+                                            Sequence = ds.Sequence
                                         }).ToArray(),
                     CurrentStateId = d.PossibleStates[0].Id,
-                    NextEvent = d.StartTriggerText
+                    NextEvent = ""
                 }).ToList();
         }
     }

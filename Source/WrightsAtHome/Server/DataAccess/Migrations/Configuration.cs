@@ -18,10 +18,22 @@ namespace WrightsAtHome.Server.DataAccess.Migrations
 
         protected override void Seed(WrightsAtHome.Server.DataAccess.AtHomeDbContext context)
         {
-            var stateOff = new DeviceState { Name = "Off", StateNumber = 0 };
-            var stateOn = new DeviceState { Name = "On", StateNumber = 1 };
-            var stateLow = new DeviceState { Name = "On Low", StateNumber = 1 };
-            var stateHigh = new DeviceState { Name = "On High", StateNumber = 2 };
+            context.Database.ExecuteSqlCommand("DELETE FROM DeviceStateChange");
+            context.Database.ExecuteSqlCommand("DELETE FROM DeviceTrigger");
+            context.Database.ExecuteSqlCommand("DELETE FROM DeviceStateChange");
+            context.Database.ExecuteSqlCommand("DELETE FROM DeviceTrigger");
+            context.Database.ExecuteSqlCommand("DELETE FROM DeviceDeviceStateXref");
+            context.Database.ExecuteSqlCommand("DELETE FROM Device");
+            context.Database.ExecuteSqlCommand("DELETE FROM DeviceState");
+            context.Database.ExecuteSqlCommand("DELETE FROM SensorReading");
+            context.Database.ExecuteSqlCommand("DELETE FROM Sensor");
+            context.Database.ExecuteSqlCommand("DELETE FROM SensorType");
+            context.Database.ExecuteSqlCommand("DELETE FROM Log");
+            
+            var stateOff = new DeviceState { Name = "Off", Sequence = 0 };
+            var stateOn = new DeviceState { Name = "On", Sequence = 1 };
+            var stateLow = new DeviceState { Name = "On Low", Sequence = 2 };
+            var stateHigh = new DeviceState { Name = "On High", Sequence = 3 };
 
             var states = new List<DeviceState> { stateOff, stateOn, stateLow, stateHigh };
 
@@ -33,56 +45,74 @@ namespace WrightsAtHome.Server.DataAccess.Migrations
                 {
                     Name = "Pool Light",
                     ImageName = "PoolLight.png",
-                    StartTriggerText = "WHEN CurrentTime >= 6:00pm AND LightLevel <= 5",
-                    EndTriggerText = "AT 10:00pm"
+                    Sequence = 1,
+                    Triggers = new List<DeviceTrigger>
+                    {
+                        new DeviceTrigger { ToState = stateOn, Sequence = 1, TriggerText = "WHEN CurrentTime >= 6:00pm AND LightLevel <= 5", IsActive = true },
+                        new DeviceTrigger { ToState = stateOff, Sequence = 2, TriggerText = "AT 10:00pm", IsActive = true}
+                    }
                 },
 
                 new Device(stateOff, stateOn)
                 {
                     Name = "Fountain",
                     ImageName = "Fountain.png",
-                    StartTriggerText = "",
-                    EndTriggerText = ""
+                    Sequence = 2
                 },
 
                 new Device(stateOff, stateOn)
                 {
                     Name = "Landscape Lights - Front",
                     ImageName = "LandscapeLights.png",
-                    StartTriggerText = "WHEN CurrentTime >= 6:00pm AND LightLevel <= 5",
-                    EndTriggerText = "AT 11:00pm"
+                    Sequence = 3,
+                    Triggers = new List<DeviceTrigger>
+                    {
+                        new DeviceTrigger { ToState = stateOn, Sequence = 1, TriggerText = "WHEN CurrentTime >= 6:00pm AND LightLevel <= 5", IsActive = true },
+                        new DeviceTrigger { ToState = stateOff, Sequence = 2, TriggerText = "AT 11:00pm", IsActive = true}
+                    }
                 },
 
                 new Device(stateOff, stateOn)
                 {
                     Name = "Landscape Lights - Back",
                     ImageName = "LandscapeLights.png",
-                    StartTriggerText = "WHEN CurrentTime >= 6:00pm AND LightLevel <= 5",
-                    EndTriggerText = "AT 10:00pm"
+                    Sequence = 4,
+                    Triggers = new List<DeviceTrigger>
+                    {
+                        new DeviceTrigger { ToState = stateOn, Sequence = 1, TriggerText = "WHEN CurrentTime >= 6:00pm AND LightLevel <= 5", IsActive = true },
+                        new DeviceTrigger { ToState = stateOff, Sequence = 2, TriggerText = "AT 10:00pm", IsActive = true}
+                    }
                 },
 
                 new Device(stateOff, stateLow, stateHigh)
                 {
                     Name = "PoolPump",
                     ImageName = "PoolPump.png",
-                    StartTriggerText = "AT 1:00am",
-                    EndTriggerText = "AFTER 4 Hours"
+                    Sequence = 5,
+                    Triggers = new List<DeviceTrigger>
+                    {
+                        new DeviceTrigger { ToState = stateLow, Sequence = 1, TriggerText = "AT 1:00am", IsActive = true },
+                        new DeviceTrigger { ToState = stateOff, Sequence = 2, TriggerText = "AFTER 4 Hours", IsActive = true}
+                    }
                 },
 
                 new Device(stateOff, stateOn)
                 {
                     Name = "Pool Heater",
                     ImageName = "PoolHeater.png",
-                    StartTriggerText = "WHEN PoolTemp < 82",
-                    EndTriggerText = "WHEN PoolTemp > 83"
+                    Sequence = 6,
+                    Triggers = new List<DeviceTrigger>
+                    {
+                        new DeviceTrigger { ToState = stateLow, Sequence = 1, TriggerText = "WHEN PoolTemp < 82", IsActive = true },
+                        new DeviceTrigger { ToState = stateOff, Sequence = 2, TriggerText = "WHEN PoolTemp > 83", IsActive = true}
+                    }
                 },
 
                 new Device(stateOff, stateOn)
                 {
                     Name = "Xmas Lights",
                     ImageName = "XmasLights.png",
-                    StartTriggerText = "",
-                    EndTriggerText = ""
+                    Sequence = 7
                 },
 
             };
@@ -97,10 +127,10 @@ namespace WrightsAtHome.Server.DataAccess.Migrations
 
             sensorTypes.ForEach(st => context.SensorTypes.AddOrUpdate(st));
 
-            var senAir = new Sensor { Name = "AirTemp", SensorType = stTemp, ImageName = "thermometer.png", ReadInterval = TimeSpan.Parse("00:10:00") };
-            var senPool = new Sensor { Name = "PoolTemp", SensorType = stTemp, ImageName = "thermometer.png", ReadInterval = TimeSpan.Parse("00:10:00") };
-            var senLight = new Sensor { Name = "LightLevel", SensorType = stLight, ImageName = "LightSensor.png", ReadInterval = TimeSpan.Parse("00:10:00") };
-            var senDay = new Sensor { Name = "Daylight", SensorType = stDay, ImageName = "LightSensor.png", ReadInterval = TimeSpan.Parse("00:10:00") };
+            var senAir = new Sensor { Name = "AirTemp", Sequence = 1, SensorType = stTemp, ImageName = "thermometer.png", ReadInterval = TimeSpan.Parse("00:10:00") };
+            var senPool = new Sensor { Name = "PoolTemp", Sequence = 2, SensorType = stTemp, ImageName = "thermometer.png", ReadInterval = TimeSpan.Parse("00:10:00") };
+            var senLight = new Sensor { Name = "LightLevel", Sequence = 3, SensorType = stLight, ImageName = "LightSensor.png", ReadInterval = TimeSpan.Parse("00:10:00") };
+            var senDay = new Sensor { Name = "Daylight", Sequence = 4, SensorType = stDay, ImageName = "LightSensor.png", ReadInterval = TimeSpan.Parse("00:10:00") };
 
             var sensors = new List<Sensor> { senAir, senPool, senLight, senDay };
 
@@ -108,10 +138,10 @@ namespace WrightsAtHome.Server.DataAccess.Migrations
 
             var sensorReadings = new List<SensorReading>
             {
-                new SensorReading {ReadingDate = DateTime.Parse("5/31/2015 10:00pm"), ReadingSensor = senAir, Value = 55m },
-                new SensorReading {ReadingDate = DateTime.Parse("5/31/2015 10:00pm"), ReadingSensor = senPool, Value = 68m },
-                new SensorReading {ReadingDate = DateTime.Parse("5/31/2015 10:00pm"), ReadingSensor = senLight, Value = 0.5m },
-                new SensorReading {ReadingDate = DateTime.Parse("5/31/2015 10:00pm"), ReadingSensor = senDay, Value = 0.5m }
+                new SensorReading {ReadingDate = DateTime.Parse("5/31/2015 10:00pm"), Sensor = senAir, Value = 55m },
+                new SensorReading {ReadingDate = DateTime.Parse("5/31/2015 10:00pm"), Sensor = senPool, Value = 68m },
+                new SensorReading {ReadingDate = DateTime.Parse("5/31/2015 10:00pm"), Sensor = senLight, Value = 0.5m },
+                new SensorReading {ReadingDate = DateTime.Parse("5/31/2015 10:00pm"), Sensor = senDay, Value = 0.5m }
             };
 
             sensorReadings.ForEach(sr => context.SensorReadings.AddOrUpdate(sr));
