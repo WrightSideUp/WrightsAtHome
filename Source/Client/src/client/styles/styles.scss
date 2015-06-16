@@ -1,0 +1,77 @@
+
+body {
+    font-family: 'Lato', Arial, Helvetica, sans-serif
+}
+
+.mainheader {
+    height: 247px;
+    background: url('../images/header.jpg') no-repeat;
+    background-size: 100% 100%;
+    border-bottom: 3px solid black;
+
+    h1 {
+        color: #c42a4e;
+        position: absolute;
+        top: 125px;
+        left: 20%;
+        font: bold 75px 'Raleway', sans-serif;
+    }
+}
+
+.dashboard-sensor-container {
+    display: flex;
+    flex-flow: row wrap;
+    background-color: moccasin;
+    border-radius: 5px;
+    align-items: center;
+    padding: 10px;
+
+    .dashboard-sensor-heading {
+        display:flex;
+        flex-flow: column nowrap;
+        margin: 0 20px 0 10px;
+
+        h2 { 
+            margin: 0;
+        }
+    }
+
+    .dashboard-sensor-error {
+        align-self: center;
+
+        h3 {
+            padding: 8px;
+            background-color: #d9534f;
+            color: white;
+        }
+    }
+
+    .dashboard-sensor {
+        border-radius: 5px;
+        background-color: lightsteelblue;
+        margin: 5px 20px 5px 5px;
+        display: flex;
+        align-items: center;
+
+        .dashboard-sensor-body {
+            margin: 10px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+
+            .dashboard-sensor-name {
+                margin: 0;
+                padding: 0;
+                font: bold 25px;
+            }
+
+            .dashboard-sensor-reading {
+                margin: 0;
+                padding: 0;
+                font: bold 25px;
+            }
+        }
+    }
+}

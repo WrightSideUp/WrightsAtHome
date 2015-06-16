@@ -1,0 +1,44 @@
+<section id="dashboard-view" class="mainbar">
+    <section class="matter">
+
+        <div class="dashboard-sensor-container">
+
+            <div class="dashboard-sensor-heading">
+                <h2>Current</h2>
+                <h2>Conditions</h2>
+            </div>
+
+            <div ng-if="vm.sensorReadError" class="dashboard-sensor-error">
+                <h3>Error getting current Sensor Readings.</h3>
+            </div>
+
+            <div class="dashboard-sensor" ng-repeat="sensor in vm.sensors">
+                <img class="dashboard-icon" ng-src="{{ sensor.smallImageUrl }}"/>
+                <div class="dashboard-sensor-body">
+                    <h4 class="dashboard-sensor-name">{{ sensor.name }}</h4>
+                    <h4 class="dashboard-sensor-reading" ng-bind-html="sensor.readingDisplayText()"></h4>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="dashboard-device-container">
+            
+            <div ng-if="vm.deviceReadError" class="dashboard-sensor-error">
+                <h3>Error getting current Device Information.</h3>
+            </div>
+
+            <div class="dashboard-device" ng-repeat="device in vm.devices">
+                <img class="dashboard-device-icon" ng-src="{{ device.SmallImageUrl}}"/>
+                <div class="dashboard-device-body">
+                    <h4 class="dashboard-device-name">{{ device.Name }}</h4>
+                    <p class="dashboard-device-event">Next Event: <span class="dashboard-device-event-desc">{{ device.NextEvent }}</span></p>
+                </div>
+                <input class="dashboard-device-button" bs-switch ng-model="device.IsOn" type="checkbox" switch-off-color="danger" statechange>
+            </div>
+
+        </div>
+
+
+    </section>
+</section>
