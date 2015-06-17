@@ -1,6 +1,7 @@
 ﻿using Autofac;
 using WrightsAtHome.Server.Domain.Services;
 using WrightsAtHome.Server.Domain.Services.Devices;
+using WrightsAtHome.Server.Domain.Services.Devices.Internal;
 using WrightsAtHome.Server.Domain.Services.Jobs;
 using WrightsAtHome.Server.Domain.Services.Sensors;
 using WrightsAtHome.Server.Domain.Services.Trigger;
@@ -16,11 +17,14 @@ namespace WrightsAtHome.Server.Domain
             builder.RegisterType<TriggerHelpers>().As<ITriggerHelpers>().InstancePerLifetimeScope();
             builder.RegisterType<TriggerCompiler>().As<ITriggerCompiler>().InstancePerLifetimeScope();
             builder.RegisterType<SensorService>().As<ISensorService>().InstancePerLifetimeScope();
-            builder.RegisterType<DeviceTriggerService>().As<IDeviceTriggerService>().InstancePerLifetimeScope();
+            builder.RegisterType<DeviceTriggerEventService>().As<IDeviceTriggerEventService>().InstancePerLifetimeScope();
             builder.RegisterType<DeviceStateService>().As<IDeviceStateService>().InstancePerLifetimeScope();
+            builder.RegisterType<DeviceTriggerCompiler>().As<IDeviceTriggerCompiler>().InstancePerLifetimeScope();
+            builder.RegisterType<DeviceTriggerProcessor>().As<IDeviceTriggerProcessor>().InstancePerLifetimeScope();
+            builder.RegisterType<DeviceService>().As<IDeviceService>().InstancePerLifetimeScope();
 
-            builder.RegisterType<TriggerManager>().As<ITriggerManager>().SingleInstance();
-            builder.RegisterType<SensorManager>().As<ISensorManager>().SingleInstance();
+            builder.RegisterType<DeviceTriggerJob>().As<IDeviceTriggerJob>().SingleInstance();
+            builder.RegisterType<SensorReadingJob>().As<ISensorReadJob>().SingleInstance();
         }
     }
 }

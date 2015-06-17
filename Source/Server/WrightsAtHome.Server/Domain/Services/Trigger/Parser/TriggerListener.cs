@@ -34,14 +34,20 @@ namespace WrightsAtHome.Server.Domain.Services.Trigger.Parser
 
         public TriggerType TriggerType { get; private set; }
 
-        public DateTime TriggerTime { get; private set; }
+        public DateTime AtTime { get; private set; }
 
+        public TimeSpan AfterDelay { get; private set; }
+
+        public Dictionary<string, string> ReferencedSensors { get; private set; } 
+        
         public List<ParameterExpression> Parameters { get { return parameters; } }
 
         public TriggerListener(ITriggerHelpers helpers)
         {
             this.helpers = helpers;
-            TriggerTime = DateTime.MaxValue;
+            AtTime = DateTime.MaxValue;
+            AfterDelay = TimeSpan.MaxValue;
+            ReferencedSensors = new Dictionary<string, string>();
         }
 
         public override void ExitAtExp(TriggerParser.AtExpContext context)
@@ -51,7 +57,7 @@ namespace WrightsAtHome.Server.Domain.Services.Trigger.Parser
             Result = Expression.GreaterThanOrEqual(CallHelperMethod("GetCurrentTime"),
                                                    Expression.Constant(timeVal));
 
-            TriggerTime = timeVal;
+            AtTime = timeVal;
             TriggerType = TriggerType.At;
         }
 
@@ -79,6 +85,8 @@ namespace WrightsAtHome.Server.Domain.Services.Trigger.Parser
             var t = context.timePeriod().HOURS() != null ? new TimeSpan(interval, 0, 0) : new TimeSpan(0, interval, 0);
 
             expressions.Put(context, Expression.Constant(t));
+
+            AfterDelay = t;
         }
 
         public override void ExitNegation(TriggerParser.NegationContext context)
@@ -109,7 +117,6 @@ namespace WrightsAtHome.Server.Domain.Services.Trigger.Parser
         {
             var timeVal = DateTime.Parse(context.TIMECONST().GetText());
             expressions.Put(context, Expression.Constant(timeVal));
-            TriggerTime = timeVal;
         }
 
         public override void ExitIdentifier(TriggerParser.IdentifierContext context)
@@ -119,7 +126,14 @@ namespace WrightsAtHome.Server.Domain.Services.Trigger.Parser
             if (IsValidIdentifier(identifier))
             {
                 var constant = Expression.Constant(identifier);
-                expressions.Put(context, Expression.Call(Expression.Constant(helpers), helpers.GetType().GetMethod("GetNumericSensorReading"), constant));
+                expressions.Put(context,
+                    Expression.Call(Expression.Constant(helpers), helpers.GetType().GetMethod("GetNumericSensorReading"),
+                        constant));
+            }
+            else
+            {
+                var token = context.ID().Symbol;
+                throw new TriggerException(token, token.Line, token.Column, string.Format("'{0}' is not a valid sensor name", identifier), null);
             }
         }
 
@@ -153,8 +167,11 @@ namespace WrightsAtHome.Server.Domain.Services.Trigger.Parser
 
         private bool IsValidIdentifier(string identifier)
         {
-            if (identifier != "BadOne")
+            string actualName;
+
+            if (helpers.TryGetSensorName(identifier, out actualName))
             {
+                ReferencedSensors[identifier] = actualName;
                 return true;
             }
 

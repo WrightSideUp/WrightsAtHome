@@ -8,7 +8,7 @@ namespace WrightsAtHome.Server.Domain.Services.Trigger.Parser
         {
             base.SyntaxError(recognizer, offendingSymbol, line, charPositionInLine, msg, e);
 
-            throw new TriggerException(msg);
+            throw new TriggerException(offendingSymbol, line, charPositionInLine, msg, e);
         }
     }
 }

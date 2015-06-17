@@ -23,7 +23,9 @@ namespace WrightsAtHome.Server.Domain.Entities
 
         public string EventDescription { get; set; }
 
-        public DateTime TriggerTime { get; set; }
+        public DateTime TriggerStartTime { get; set; }
+
+        public TimeSpan TriggerAfterDelay { get; set; }
 
         public Func<bool> AtOrWhenFunction { get; set; }
 

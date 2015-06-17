@@ -207,6 +207,9 @@
     <Compile Include="Domain\Entities\Log.cs" />
     <Compile Include="Domain\Entities\TriggerInfo.cs" />
     <Compile Include="Domain\Services\DateTimeHelpers.cs" />
+    <Compile Include="Domain\Services\Devices\Internal\DeviceTriggerEventService.cs" />
+    <Compile Include="Domain\Services\Devices\Internal\DeviceTriggerCompiler.cs" />
+    <Compile Include="Domain\Services\Devices\Internal\DeviceTriggerProcessor.cs" />
     <Compile Include="Domain\Services\Trigger\Parser\Generated\ITriggerVisitor.cs" />
     <Compile Include="Domain\Services\Trigger\Parser\Generated\TriggerBaseListener.cs">
       <SubType>Code</SubType>
@@ -258,10 +261,10 @@
     <Compile Include="Domain\Entities\Sensor.cs" />
     <Compile Include="Domain\Entities\SensorReading.cs" />
     <Compile Include="Domain\Entities\SensorType.cs" />
-    <Compile Include="Domain\Services\Devices\DeviceStateService.cs" />
-    <Compile Include="Domain\Services\Devices\DeviceTriggerService.cs" />
-    <Compile Include="Domain\Services\Jobs\SensorManager.cs" />
-    <Compile Include="Domain\Services\Jobs\TriggerManager.cs" />
+    <Compile Include="Domain\Services\Devices\Internal\DeviceStateService.cs" />
+    <Compile Include="Domain\Services\Devices\DeviceService.cs" />
+    <Compile Include="Domain\Services\Jobs\SensorReadingJob.cs" />
+    <Compile Include="Domain\Services\Jobs\DeviceTriggerJob.cs" />
     <Compile Include="Domain\Services\Sensors\SensorService.cs" />
     <Compile Include="Domain\Services\Trigger\Parser\TriggerErrors.cs" />
     <Compile Include="Domain\Services\Trigger\Parser\TriggerHelpers.cs" />

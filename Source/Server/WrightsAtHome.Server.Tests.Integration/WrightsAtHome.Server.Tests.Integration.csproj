@@ -8,8 +8,8 @@
     <ProjectGuid>{3EBDC914-BCF0-4627-9695-962F80E062F2}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>WrightsAtHome.Tests.Integration</RootNamespace>
-    <AssemblyName>WrightsAtHome.Tests.Integration</AssemblyName>
+    <RootNamespace>WrightsAtHome.Server.Tests.Integration</RootNamespace>
+    <AssemblyName>WrightsAtHomeServer..Tests.Integration</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
@@ -69,12 +69,14 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Domain\Services\Devices\DeviceTriggerEventServiceTests.cs" />
     <Compile Include="Domain\Services\Devices\DeviceStateServiceTests.cs" />
-    <Compile Include="Domain\Services\Devices\DeviceTriggerServiceTests.cs" />
+    <Compile Include="Domain\Services\Devices\DeviceTriggerProcessorTests.cs" />
     <Compile Include="Utility\DatabaseCollection.cs" />
     <Compile Include="Utility\DatabaseFixture.cs" />
     <Compile Include="Utility\DatabaseSnapshot.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utility\DeviceUtils.cs" />
     <Compile Include="Utility\SqlAssert.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -84,6 +86,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\WrightsAtHome.Server.Tests.Unit\WrightsAtHome.Server.Tests.Unit.csproj">
+      <Project>{7e3dc53b-a237-44ab-adfb-6363a9d80dcf}</Project>
+      <Name>WrightsAtHome.Server.Tests.Unit</Name>
+    </ProjectReference>
     <ProjectReference Include="..\WrightsAtHome.Server\WrightsAtHome.Server.csproj">
       <Project>{73829d2a-7822-4bde-9fee-d0e0ec249e75}</Project>
       <Name>WrightsAtHome.Server</Name>

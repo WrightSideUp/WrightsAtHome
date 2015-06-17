@@ -8,17 +8,17 @@ using WrightsAtHome.Server.Domain.Services.Sensors;
 
 namespace WrightsAtHome.Server.Domain.Services.Jobs
 {
-    public interface ISensorManager
+    public interface ISensorReadJob
     {
         void GetSensorReadings();
     }
-    public class SensorManager : ISensorManager
+    public class SensorReadingJob : ISensorReadJob
     {
         private readonly IAtHomeDbContext dbContext;
         private readonly ISensorService sensorService;
         private readonly ILogger logger;
 
-        public SensorManager(IAtHomeDbContext dbContext, ISensorService sensorService)
+        public SensorReadingJob(IAtHomeDbContext dbContext, ISensorService sensorService)
         {
             this.dbContext = dbContext;
             this.sensorService = sensorService;

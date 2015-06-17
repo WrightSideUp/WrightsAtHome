@@ -34,7 +34,10 @@ namespace WrightsAtHome.Server.DataAccess
     
     public class AtHomeDbContext : DbContext, IAtHomeDbContext
     {
-        public AtHomeDbContext() : base("AtHomeDbContext") { }
+        public AtHomeDbContext() : base("AtHomeDbContext")
+        {
+            Configuration.LazyLoadingEnabled = false;
+        }
 
         public IDbSet<Device> Devices { get; set; }
 

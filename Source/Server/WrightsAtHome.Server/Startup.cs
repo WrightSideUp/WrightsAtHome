@@ -82,8 +82,8 @@ namespace WrightsAtHome
             //---------------------------------------
             // Start the Trigger and Sensor jobs 
             //---------------------------------------
-            RecurringJob.AddOrUpdate<ITriggerManager>(x => x.MonitorSchedules(), Cron.Minutely); // every minute
-            RecurringJob.AddOrUpdate<ISensorManager>(x => x.GetSensorReadings(), "*/10 * * * *");    // every 10 minutes
+            RecurringJob.AddOrUpdate<IDeviceTriggerJob>(x => x.MonitorSchedules(), Cron.Minutely); // every minute
+            RecurringJob.AddOrUpdate<ISensorReadJob>(x => x.GetSensorReadings(), "*/10 * * * *");    // every 10 minutes
             
             //-----------------------------------
             // Setup Http Routing
