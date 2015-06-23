@@ -6,14 +6,13 @@ namespace WrightsAtHome.Server.Domain.Services.Devices
 {
     public interface IDeviceService
     {
-        Task<string> GetNextTriggerEvent(int deviceId);
+        string GetNextTriggerEvent(int deviceId);
 
         void ProcessTriggers(int deviceId);
 
         DeviceState GetCurrentDeviceState(int deviceId);
 
-        void ChangeDeviceState(Device device, DeviceState toState);
-
+        Task ChangeDeviceStateAsync(int deviceId, int toStateId);
     }
 
     public class DeviceService : IDeviceService
@@ -33,7 +32,7 @@ namespace WrightsAtHome.Server.Domain.Services.Devices
             this.stateService = stateService;
         }
 
-        public Task<string> GetNextTriggerEvent(int deviceId)
+        public string GetNextTriggerEvent(int deviceId)
         {
             return eventService.GetNextTriggerEvent(deviceId);
         }
@@ -43,15 +42,14 @@ namespace WrightsAtHome.Server.Domain.Services.Devices
             triggerProcessor.ProcessTriggers(deviceId);
         }
 
-
         public DeviceState GetCurrentDeviceState(int deviceId)
         {
             return stateService.GetCurrentDeviceState(deviceId);
         }
 
-        public void ChangeDeviceState(Device device, DeviceState toState)
+        public async Task ChangeDeviceStateAsync(int deviceId, int toStateId)
         {
-            stateService.ChangeDeviceState(device, toState);
+            await stateService.ChangeDeviceStateAsync(deviceId, toStateId);
         }
     }
 }

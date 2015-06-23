@@ -2,6 +2,7 @@
 using System.Linq;
 using WrightsAtHome.Server.Domain.Entities;
 using WrightsAtHome.Server.Domain.Services.Trigger;
+using WrightsAtHome.Server.Domain.Services.Trigger.Compiler;
 
 namespace WrightsAtHome.Server.Domain.Services.Devices.Internal
 {

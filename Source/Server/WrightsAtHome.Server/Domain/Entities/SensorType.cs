@@ -10,11 +10,16 @@ namespace WrightsAtHome.Server.Domain.Entities
 
         public string Name { get; set; }
 
-        public List<Sensor> Sensors { get; set; }
+        public IList<Sensor> Sensors { get; set; }
 
         [ConcurrencyCheck]
         public DateTime LastModified { get; set; }
 
         public int LastModifiedUserId { get; set; }
+
+        public SensorType()
+        {
+            Sensors = new List<Sensor>();
+        }
     }
 }

@@ -3,15 +3,17 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using Antlr4.Runtime.Tree;
 using WrightsAtHome.Server.Domain.Entities;
+using WrightsAtHome.Server.Domain.Services.Trigger.Parser;
 using WrightsAtHome.Server.Domain.Services.Trigger.Parser.Generated;
 
-namespace WrightsAtHome.Server.Domain.Services.Trigger.Parser
+namespace WrightsAtHome.Server.Domain.Services.Trigger.Compiler
 {
-    public class TriggerListener : TriggerBaseListener
+    public class TriggerCompilerListener : TriggerBaseListener, ITriggerParseListener
     {
         private readonly ITriggerHelpers helpers;
         private readonly ParseTreeProperty<Expression> expressions = new ParseTreeProperty<Expression>();
         private readonly List<ParameterExpression> parameters = new List<ParameterExpression>();
+        private readonly Dictionary<string, string> referencedSensors = new Dictionary<string, string>(); 
 
         private readonly Dictionary<string, Func<Expression, Expression, BinaryExpression>> BinaryOperatorMap = new Dictionary<string, Func<Expression, Expression, BinaryExpression>>()
         {
@@ -38,16 +40,22 @@ namespace WrightsAtHome.Server.Domain.Services.Trigger.Parser
 
         public TimeSpan AfterDelay { get; private set; }
 
-        public Dictionary<string, string> ReferencedSensors { get; private set; } 
+        public Dictionary<string, string> ReferencedSensors { get { return referencedSensors; }  } 
         
         public List<ParameterExpression> Parameters { get { return parameters; } }
 
-        public TriggerListener(ITriggerHelpers helpers)
+        public TriggerCompilerListener(ITriggerHelpers helpers)
         {
             this.helpers = helpers;
+        }
+
+        public void Initialize()
+        {
+            Parameters.Clear();
+            Parameters.Add(Expression.Parameter(typeof(DateTime), "StartTime"));
             AtTime = DateTime.MaxValue;
             AfterDelay = TimeSpan.MaxValue;
-            ReferencedSensors = new Dictionary<string, string>();
+            ReferencedSensors.Clear();
         }
 
         public override void ExitAtExp(TriggerParser.AtExpContext context)
@@ -133,7 +141,7 @@ namespace WrightsAtHome.Server.Domain.Services.Trigger.Parser
             else
             {
                 var token = context.ID().Symbol;
-                throw new TriggerException(token, token.Line, token.Column, string.Format("'{0}' is not a valid sensor name", identifier), null);
+                throw new TriggerException(token, token.StartIndex, identifier.Length, string.Format("'{0}' is not a valid sensor name", identifier), null);
             }
         }
 

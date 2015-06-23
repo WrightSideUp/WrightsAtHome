@@ -13,7 +13,7 @@ namespace WrightsAtHome.Server.Domain.Services.Devices.Internal
     {
         // Determine the next trigger event that is likely to fire and return 
         // its description.
-        Task<string> GetNextTriggerEvent(int deviceId);
+        string GetNextTriggerEvent(int deviceId);
     }
 
     public class DeviceTriggerEventService : IDeviceTriggerEventService
@@ -38,9 +38,9 @@ namespace WrightsAtHome.Server.Domain.Services.Devices.Internal
             logger = LogManager.GetCurrentClassLogger();
         }
 
-        public async Task<string> GetNextTriggerEvent(int deviceId)
+        public string GetNextTriggerEvent(int deviceId)
         {
-            var device = await FetchDeviceWithTriggersAsync(deviceId);
+            var device = FetchDeviceWithTriggers(deviceId);
 
             if (!device.Triggers.Any())
             {
@@ -116,7 +116,7 @@ namespace WrightsAtHome.Server.Domain.Services.Devices.Internal
 
             var firstGreaterThanNow =
                 atTriggers.FirstOrDefault(
-                    p => dateTimeHelpers.Now.Date + p.TriggerStartTime.TimeOfDay > dateTimeHelpers.Now);
+                p => dateTimeHelpers.Now.Date + p.TriggerStartTime.TimeOfDay > dateTimeHelpers.Now);
 
             if (firstGreaterThanNow != null)
             {
@@ -129,9 +129,9 @@ namespace WrightsAtHome.Server.Domain.Services.Devices.Internal
             return firstTrigger != null ? firstTrigger.EventDescription + " tomorrow" : null;
         }
 
-        private async Task<Device> FetchDeviceWithTriggersAsync(int deviceId)
+        private Device FetchDeviceWithTriggers(int deviceId)
         {
-            var device = await dbContext.Devices.SingleOrDefaultAsync(d => d.Id == deviceId);
+            var device = dbContext.Devices.SingleOrDefault(d => d.Id == deviceId);
 
             if (device == null)
             {
@@ -141,13 +141,13 @@ namespace WrightsAtHome.Server.Domain.Services.Devices.Internal
                 throw ex;
             }
 
-            await dbContext.Entry(device)
+            dbContext.Entry(device)
                 .Collection(d => d.Triggers)
                 .Query()
                 .Include(t => t.ToState)
                 .Where(t => t.IsActive)
                 .OrderBy(t => t.Sequence)
-                .LoadAsync();
+                .Load();
 
             return device;
         }

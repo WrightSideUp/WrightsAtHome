@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Moq;
 using WrightsAtHome.Server.DataAccess;
 using WrightsAtHome.Server.Domain.Entities;
 using WrightsAtHome.Server.Domain.Services.Devices.Internal;
 using WrightsAtHome.Server.Domain.Services.Trigger;
+using WrightsAtHome.Server.Domain.Services.Trigger.Compiler;
 using WrightsAtHome.Server.Tests.Integration.Utility;
 using WrightsAtHome.Server.Tests.Unit.Utility;
 using Xunit;
@@ -19,7 +21,7 @@ namespace WrightsAtHome.Server.Tests.Integration.Domain.Services.Devices
         [InlineData("AT 5:00pm", "at 11:00pm", "4:59pm", "Off", "Turn On AT 5:00pm")]
         [InlineData("AT 5:00pm", "at 11:00pm", "5:05pm", "Off", "Turn On AT 5:00pm tomorrow")]
         [InlineData("AT 5:00pm", "at 11:00pm", "5:01pm", "On", "Turn Off AT 11:00pm")]
-        public async void AtTriggerTests(string trigger1, string trigger2, string currentTime, string stateName, string expectedTrigger)
+        public void AtTriggerTests(string trigger1, string trigger2, string currentTime, string stateName, string expectedTrigger)
         {
             using (var ctx = new AtHomeDbContext())
             {
@@ -36,7 +38,7 @@ namespace WrightsAtHome.Server.Tests.Integration.Domain.Services.Devices
                 var underTest = new DeviceTriggerEventService(ctx, triggerComp, stateSvc.Object, helpers);
 
                 // Act
-                string eventDesc = await underTest.GetNextTriggerEvent(device.Id);
+                string eventDesc = underTest.GetNextTriggerEvent(device.Id);
 
                 // Assert
                 Assert.Equal(expectedTrigger, eventDesc);
@@ -48,7 +50,7 @@ namespace WrightsAtHome.Server.Tests.Integration.Domain.Services.Devices
         [InlineData("When AirTemp > 80", "when AirTemp < 75", "4:59pm", "Off", "Turn On WHEN AirTemp > 80")]
         [InlineData("When AirTemp > 80", "when AirTemp < 75", "4:59pm", "On", "Turn Off WHEN AirTemp < 75")]
         [InlineData("When AirTemp > 80", "after 4 hours", "4:59pm", "On", "None")]
-        public async void WhenTriggerTests(string trigger1, string trigger2, string currentTime, string stateName, string expectedTrigger)
+        public void WhenTriggerTests(string trigger1, string trigger2, string currentTime, string stateName, string expectedTrigger)
         {
             using (var ctx = new AtHomeDbContext())
             {
@@ -65,7 +67,7 @@ namespace WrightsAtHome.Server.Tests.Integration.Domain.Services.Devices
                 var underTest = new DeviceTriggerEventService(ctx, triggerComp, stateSvc.Object, helpers);
 
                 // Act
-                string eventDesc = await underTest.GetNextTriggerEvent(device.Id);
+                string eventDesc = underTest.GetNextTriggerEvent(device.Id);
 
                 // Assert
                 Assert.Equal(expectedTrigger, eventDesc);
@@ -73,7 +75,7 @@ namespace WrightsAtHome.Server.Tests.Integration.Domain.Services.Devices
         }
 
         [Fact]
-        public async void SimpleAfterTrigger()
+        public void SimpleAfterTrigger()
         {
             using (var ctx = new AtHomeDbContext())
             {
@@ -96,7 +98,7 @@ namespace WrightsAtHome.Server.Tests.Integration.Domain.Services.Devices
                 var underTest = new DeviceTriggerEventService(ctx, triggerComp, stateSvc.Object, helpers);
 
                 // Act
-                string eventDesc = await underTest.GetNextTriggerEvent(device.Id);
+                string eventDesc = underTest.GetNextTriggerEvent(device.Id);
 
                 // Assert
                 Assert.Equal("Turn Off AFTER 3 hours [will happen at 8:23 PM]", eventDesc);
@@ -104,7 +106,7 @@ namespace WrightsAtHome.Server.Tests.Integration.Domain.Services.Devices
         }
 
         [Fact]
-        public async void TwoWaitingAfterTriggers()
+        public void TwoWaitingAfterTriggers()
         {
             using (var ctx = new AtHomeDbContext())
             {
@@ -146,7 +148,7 @@ namespace WrightsAtHome.Server.Tests.Integration.Domain.Services.Devices
                 var underTest = new DeviceTriggerEventService(ctx, triggerComp, stateSvc.Object, helpers);
 
                 // Act
-                string eventDesc = await underTest.GetNextTriggerEvent(device.Id);
+                string eventDesc = underTest.GetNextTriggerEvent(device.Id);
 
                 // Assert
                 Assert.Equal("Turn Off AFTER 2 hours [will happen at 8:22 PM]", eventDesc);

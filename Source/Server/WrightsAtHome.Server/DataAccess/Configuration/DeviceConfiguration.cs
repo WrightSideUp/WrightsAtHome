@@ -1,4 +1,6 @@
-﻿using System.Data.Entity.ModelConfiguration;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.Data.Entity.Infrastructure.Annotations;
+using System.Data.Entity.ModelConfiguration;
 using WrightsAtHome.Server.Domain.Entities;
 
 namespace WrightsAtHome.Server.DataAccess.Configuration
@@ -18,10 +20,16 @@ namespace WrightsAtHome.Server.DataAccess.Configuration
 
             Property(d => d.Name)
                 .IsRequired()
-                .HasMaxLength(30);
+                .HasMaxLength(30)
+                .HasColumnAnnotation(
+                    IndexAnnotation.AnnotationName,
+                    new IndexAnnotation(new IndexAttribute("IX_DeviceName", 1) { IsUnique = true }));
 
             Property(d => d.Sequence)
-                .IsRequired();
+                .IsRequired()
+                .HasColumnAnnotation(
+                    IndexAnnotation.AnnotationName,
+                    new IndexAnnotation(new IndexAttribute("IX_DeviceSequence", 1) { IsUnique = true }));
 
             Property(d => d.ImageName)
                 .IsRequired()

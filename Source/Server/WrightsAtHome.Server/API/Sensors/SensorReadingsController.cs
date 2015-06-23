@@ -1,22 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity;
+﻿using System.Data.Entity;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Web.Http;
-using WrightsAtHome.Server.API.Common;
+using System.Web.Http.Description;
+using AutoMapper;
+using WrightsAtHome.Server.API.Sensors.Model;
 using WrightsAtHome.Server.DataAccess;
 using WrightsAtHome.Server.Domain.Entities;
 using WrightsAtHome.Server.Domain.Services.Sensors;
 
-// For more information on enabling Web API for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace WrightsAtHome.Server.API.Sensors
 {
-    [RoutePrefix("api/[controller]")]
+    [RoutePrefix("api/sensors")]
     public class SensorReadingsController : ApiController
     {
         private readonly IAtHomeDbContext dbContext;
@@ -28,42 +24,42 @@ namespace WrightsAtHome.Server.API.Sensors
             this.sensorService = sensorService;
         }
 
-        // GET: api/sensorreadings
-        public async Task<IEnumerable<SensorReadingInfo>> Get()
+        // GET api/sensorreadings
+        [Route("")]
+        [ResponseType(typeof(SensorReadingDto[]))]
+        public async Task<IHttpActionResult> Get()
         {
-            var sensors = await dbContext.Sensors.Include(s => s.SensorType).ToListAsync();
+            var sensors = await dbContext.Sensors
+                .Include(s => s.SensorType)
+                .AsNoTracking()
+                .ToListAsync();
 
-            return sensors.Select(GetSensorReadingProjetionForSensor);
+            return Ok(sensors.Select(AsDto).ToArray());
         }
 
-        // GET api/sensors/5
-        public async Task<SensorReadingInfo> Get(int id)
+        // GET api/sensorreadings/5
+        [Route("{id:int}")]
+        [ResponseType(typeof(SensorReadingDto))]
+        public async Task<IHttpActionResult> Get(int id)
         {
-            var sensor = await dbContext.Sensors.Include(s => s.SensorType).SingleOrDefaultAsync(s => s.Id == id);
+            var sensor = await dbContext.Sensors
+                .Include(s => s.SensorType)
+                .AsNoTracking()
+                .SingleOrDefaultAsync(s => s.Id == id);
 
             if (sensor == null)
             {
-                throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.NotFound)
-                {
-                    Content = new StringContent(string.Format("No Sendor with Id: {0}", id)),
-                    ReasonPhrase = "Sensor Id Not Found"
-                });
+                return NotFound();
             }
 
-            return GetSensorReadingProjetionForSensor(sensor);
+            return Ok(AsDto(sensor));
         }
 
-        private SensorReadingInfo GetSensorReadingProjetionForSensor(Sensor s)
+        private SensorReadingDto AsDto(Sensor s)
         {
-            return new SensorReadingInfo
-            {
-                Id = s.Id,
-                Name = s.Name,
-                SensorType = s.SensorType.Name,
-                LargeImageUrl = this.DeviceImageUrlLarge(s.ImageName),
-                SmallImageUrl = this.DeviceImageUrlSmall(s.ImageName),
-                Reading = sensorService.GetCurrentSensorReading(s.Id)
-            };
+            var dto = Mapper.Map<SensorReadingDto>(s);
+            dto.Reading = sensorService.GetCurrentSensorReading(s.Id);
+            return dto;
         }
     }
 }

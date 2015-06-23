@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using WrightsAtHome.Server.Domain.Services;
+using WrightsAtHome.Server.Domain.Services.Trigger;
 using WrightsAtHome.Server.Domain.Services.Trigger.Parser;
 
 namespace WrightsAtHome.Server.Tests.Unit.Utility
@@ -50,6 +51,16 @@ namespace WrightsAtHome.Server.Tests.Unit.Utility
 
             actualSensorName = entry.Key;
             return true;
+        }
+
+        public bool IsValidSensorName(string sensorName)
+        {
+            if (SensorReadings == null)
+            {
+                return false;
+            }
+
+            return SensorReadings.Any(p => p.Key.ToLower() == sensorName.ToLower());
         }
     }
 }

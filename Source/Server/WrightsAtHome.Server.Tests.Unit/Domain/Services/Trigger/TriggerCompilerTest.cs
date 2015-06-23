@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using WrightsAtHome.Server.Domain.Entities;
 using WrightsAtHome.Server.Domain.Services.Trigger;
-using WrightsAtHome.Server.Domain.Services.Trigger.Parser;
+using WrightsAtHome.Server.Domain.Services.Trigger.Compiler;
 using WrightsAtHome.Server.Tests.Unit.Utility;
 using Xunit;
 
@@ -100,10 +99,10 @@ namespace WrightsAtHome.Server.Tests.Unit.Domain.Services.Trigger
         }
 
         [Theory]
-        [InlineData("WHEN PoolTemp < 80", "PoolTemp", 1, 5)]
-        [InlineData("WHEN someSENSOR = 1", "someSENSOR", 1, 5)]
-        [InlineData("WHEN \nOnNewLine <= 100", "OnNewLine", 2, 0)]
-        public void InvalidSensor(string triggerText, string sensor, int line, int charPos)
+        [InlineData("WHEN PoolTemp < 80", "PoolTemp", 5, 8)]
+        [InlineData("WHEN someSENSOR = 1", "someSENSOR", 5, 10)]
+        [InlineData("WHEN \nOnNewLine <= 100", "OnNewLine", 6, 9)]
+        public void InvalidSensor(string triggerText, string sensor, int start, int length)
         {
             // Arrange
             var trigger = BuildTestTrigger(triggerText);
@@ -112,8 +111,8 @@ namespace WrightsAtHome.Server.Tests.Unit.Domain.Services.Trigger
             // Act, Assert
             var ex = Assert.Throws<TriggerException>(() => underTest.CompileTrigger(trigger));
             
-            Assert.Equal(line, ex.Line);
-            Assert.Equal(charPos, ex.CharPositionInLine);
+            Assert.Equal(start, ex.StartIndex);
+            Assert.Equal(length, ex.Length);
             Assert.Equal(string.Format("'{0}' is not a valid sensor name", sensor), ex.Message);
         }
 

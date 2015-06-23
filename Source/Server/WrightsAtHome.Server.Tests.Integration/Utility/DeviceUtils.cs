@@ -8,6 +8,8 @@ namespace WrightsAtHome.Server.Tests.Integration.Utility
 {
     public static class DeviceUtils
     {
+        private static int lastSequence = 10;
+
         public static Device CreateTestDevice(AtHomeDbContext ctx, string name, string trigger1, string trigger2)
         {
             var stateOn = ctx.DeviceStates.Single(s => s.Name == "On");
@@ -17,7 +19,7 @@ namespace WrightsAtHome.Server.Tests.Integration.Utility
             {
                 Name = name,
                 ImageName = "TestImg",
-                Sequence = 0,
+                Sequence = lastSequence + 1,
                 Triggers = new List<DeviceTrigger>
                 {
                     new DeviceTrigger {ToState = stateOn, Sequence = 1, TriggerText = trigger1, IsActive = true},
@@ -27,6 +29,8 @@ namespace WrightsAtHome.Server.Tests.Integration.Utility
             });
 
             ctx.SaveChanges();
+
+            lastSequence++;
 
             return ctx.Devices.Include("Triggers").Single(d => d.Name == name);
         }

@@ -121,7 +121,7 @@ namespace WrightsAtHome.Server.Domain.Services.Devices.Internal
             logger.Info("Attempting state change on device {0} to {1} due to trigger ID {2}", device.Name,
                 trigger.ToState, trigger.Id);
 
-            deviceStateService.ChangeDeviceState(device, trigger.ToState);
+            deviceStateService.ChangeDeviceState(device, trigger.ToState, trigger);
         }
 
         private void ProcessAfterTrigger(Device device, TriggerContext context)

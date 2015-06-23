@@ -12,7 +12,7 @@ namespace WrightsAtHome.Server.Domain.Entities
 
         public int Sequence { get; set; }
 
-        public List<Device> Devices { get; set; }
+        public IList<Device> Devices { get; set; }
 
         public bool IsTransitional { get; set; }
 
@@ -20,5 +20,10 @@ namespace WrightsAtHome.Server.Domain.Entities
         public DateTime LastModified { get; set; }
 
         public int LastModifiedUserId { get; set; }
+
+        public DeviceState()
+        {
+            Devices = new List<Device>();
+        }
     }
 }

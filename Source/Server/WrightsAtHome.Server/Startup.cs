@@ -7,15 +7,20 @@ using System.Web.Http;
 using System.Web.Http.Cors;
 using Autofac;
 using Autofac.Integration.WebApi;
+using AutoMapper;
 using Newtonsoft.Json.Serialization;
 using NLog;
 using NLog.Config;
 using NLog.Targets;
+using WrightsAtHome.Server.API;
+using WrightsAtHome.Server.API.Common;
 using WrightsAtHome.Server.DataAccess;
 using WrightsAtHome.Server.Domain;
 using WrightsAtHome.Server.Domain.Services.Jobs;
+using WrightsAtHome.Server.Domain.Services.Sensors;
+// ReSharper disable UnusedVariable
 
-namespace WrightsAtHome
+namespace WrightsAtHome.Server
 {
     public class Startup
     {
@@ -29,6 +34,7 @@ namespace WrightsAtHome
             //-----------------------------------
             var builder = new ContainerBuilder();
 
+            builder.RegisterModule<ApiModule>();
             builder.RegisterModule<DomainModule>();
             builder.RegisterModule<DataAccessModule>();
             builder.RegisterApiControllers(Assembly.GetExecutingAssembly());
@@ -43,21 +49,22 @@ namespace WrightsAtHome
             //-----------------------------------
             var logConfig = new LoggingConfiguration();
 
-            var consoleTarg = new ColoredConsoleTarget();
-            consoleTarg.Layout = "${logger}::${message}";
+            var consoleTarg = new ColoredConsoleTarget {Layout = "${logger}::${message}"};
             logConfig.AddTarget("console", consoleTarg);
-            
-            var dbTarg = new DatabaseTarget();
-            dbTarg.ConnectionStringName = "AtHomeDbContext";
-            dbTarg.CommandText = "INSERT INTO Log (TimeStamp, Message, Exception, Level, Logger) VALUES(GETDATE(), @msg, @exception, @level, @logger)";
+
+            var dbTarg = new DatabaseTarget
+            {
+                ConnectionStringName = "AtHomeDbContext",
+                CommandText =
+                    "INSERT INTO Log (TimeStamp, Message, Exception, Level, Logger) VALUES(GETDATE(), @msg, @exception, @level, @logger)"
+            };
             dbTarg.Parameters.Add(new DatabaseParameterInfo("@msg", "${message}"));
             dbTarg.Parameters.Add(new DatabaseParameterInfo("@exception", "${exception}"));
             dbTarg.Parameters.Add(new DatabaseParameterInfo("@level", "${level}"));
             dbTarg.Parameters.Add(new DatabaseParameterInfo("@logger", "${logger}"));
             logConfig.AddTarget("db", dbTarg);
 
-            var debugTarg = new DebugTarget();
-            debugTarg.Layout = "${logger}::${message}";
+            var debugTarg = new DebugTarget {Layout = "${logger}::${message}"};
             logConfig.AddTarget("debugger", debugTarg);
 
             var rule1 = new LoggingRule("*", LogLevel.Info, consoleTarg);
@@ -83,7 +90,19 @@ namespace WrightsAtHome
             // Start the Trigger and Sensor jobs 
             //---------------------------------------
             RecurringJob.AddOrUpdate<IDeviceTriggerJob>(x => x.MonitorSchedules(), Cron.Minutely); // every minute
-            RecurringJob.AddOrUpdate<ISensorReadJob>(x => x.GetSensorReadings(), "*/10 * * * *");    // every 10 minutes
+            RecurringJob.AddOrUpdate<ISensorReadJob>(x => x.GetSensorReadings(), Cron.Minutely);    // every 10 minutes
+            //RecurringJob.AddOrUpdate<ISensorReadJob>(x => x.GetSensorReadings(), "*/10 * * * *");    // every 10 minutes
+
+            //---------------------------------------
+            // Setup Caches
+            //---------------------------------------
+            var sensorCache = container.Resolve<ISensorCache>();
+
+            //---------------------------------------
+            // Setup Automapping for DTO's
+            //---------------------------------------
+            Mapper.Initialize(map => map.ConstructServicesUsing(container.Resolve));
+            AutoMapperConfiguration.Configure();
             
             //-----------------------------------
             // Setup Http Routing

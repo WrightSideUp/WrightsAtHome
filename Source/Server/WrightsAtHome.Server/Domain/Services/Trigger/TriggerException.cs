@@ -7,18 +7,18 @@ namespace WrightsAtHome.Server.Domain.Services.Trigger
     {
         public IToken OffendingSymbol { get; private set; }
 
-        public int Line { get; private set; }
+        public int StartIndex { get; private set; }
 
-        public int CharPositionInLine { get; private set; }
+        public int Length { get; private set; }
 
         public RecognitionException RecognitionException { get; private set; }
 
-        public TriggerException(IToken offendingSymbol, int line, int charPositionInLine, string msg,
+        public TriggerException(IToken offendingSymbol, int startIndex, int length, string msg,
             RecognitionException e) : base(msg)
         {
             OffendingSymbol = offendingSymbol;
-            Line = line;
-            CharPositionInLine = charPositionInLine;
+            StartIndex = startIndex;
+            Length = length;
             RecognitionException = e;
         }
     }

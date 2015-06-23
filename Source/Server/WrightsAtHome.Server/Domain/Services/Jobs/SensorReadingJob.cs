@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Linq;
+using Autofac;
 using NLog;
 using WrightsAtHome.Server.DataAccess;
 using WrightsAtHome.Server.Domain.Entities;
 using WrightsAtHome.Server.Domain.Services.Sensors;
-
 
 namespace WrightsAtHome.Server.Domain.Services.Jobs
 {
@@ -14,14 +14,12 @@ namespace WrightsAtHome.Server.Domain.Services.Jobs
     }
     public class SensorReadingJob : ISensorReadJob
     {
-        private readonly IAtHomeDbContext dbContext;
-        private readonly ISensorService sensorService;
+        private readonly ILifetimeScope parentScope;
         private readonly ILogger logger;
 
-        public SensorReadingJob(IAtHomeDbContext dbContext, ISensorService sensorService)
+        public SensorReadingJob(ILifetimeScope parentScope)
         {
-            this.dbContext = dbContext;
-            this.sensorService = sensorService;
+            this.parentScope = parentScope;
             logger = LogManager.GetCurrentClassLogger();
         }
 
@@ -31,28 +29,34 @@ namespace WrightsAtHome.Server.Domain.Services.Jobs
             {
                 logger.Info("Sensor Reading Begun");
 
-                var allSensors = dbContext.Sensors.OrderBy(s => s.Sequence).ToList();
-
-                foreach (var sensor in allSensors)
+                using (var autoFacScope = parentScope.BeginLifetimeScope())
                 {
-                    try
-                    {
-                        var currentReading = sensorService.GetCurrentSensorReading(sensor.Id);
+                    var dbContext = autoFacScope.Resolve<IAtHomeDbContext>();
+                    var sensorService = autoFacScope.Resolve<ISensorService>();
 
-                        dbContext.SensorReadings.Add(new SensorReading
+                    var allSensors = dbContext.Sensors.OrderBy(s => s.Sequence).ToList();
+
+                    foreach (var sensor in allSensors)
+                    {
+                        try
                         {
-                            ReadingDate = DateTime.Now,
-                            Sensor = sensor,
-                            Value = currentReading
-                        });
-                    }
-                    catch (Exception ex)
-                    {
-                        logger.Error(ex, "Error reading sensor {0}", sensor.Name);
-                    }
-                }
+                            var currentReading = sensorService.GetCurrentSensorReading(sensor.Id);
 
-                dbContext.SaveChanges();
+                            sensor.Readings.Add(new SensorReading
+                            {
+                                ReadingDate = DateTime.Now,
+                                Value = currentReading
+                            });
+                        }
+                        catch (Exception ex)
+                        {
+                            logger.Error(ex, "Error reading sensor {0}", sensor.Name);
+                        }
+                    }
+
+                    dbContext.SaveChanges();
+
+                }
 
                 logger.Info("Sensor Reading Ended");
             }

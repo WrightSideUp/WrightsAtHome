@@ -10,7 +10,7 @@ namespace WrightsAtHome.Server.Domain.Services
         DateTime Now { get; }
     }
     
-    public class DateTimeHelpers
+    public class DateTimeHelpers : IDateTimeHelpers
     {
         public DateTime Now { get { return DateTime.Now; } }
     }

@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Data.Entity;
 using System.Linq;
+using Autofac;
 using NLog;
 using WrightsAtHome.Server.DataAccess;
 using WrightsAtHome.Server.Domain.Services.Devices;
@@ -14,15 +14,12 @@ namespace WrightsAtHome.Server.Domain.Services.Jobs
 
     public class DeviceTriggerJob : IDeviceTriggerJob
     {
-        private readonly IAtHomeDbContext dbContext;
-        private readonly IDeviceService deviceService;
+        private readonly ILifetimeScope parentScope;
         private readonly ILogger logger;
 
-        public DeviceTriggerJob(IAtHomeDbContext dbContext, IDeviceService deviceService)
+        public DeviceTriggerJob(ILifetimeScope parentScope)
         {
-            this.dbContext = dbContext;
-            this.deviceService = deviceService;
-
+            this.parentScope = parentScope;
             logger = LogManager.GetCurrentClassLogger();
         }
 
@@ -32,11 +29,18 @@ namespace WrightsAtHome.Server.Domain.Services.Jobs
             {
                 logger.Info("Device Trigger Processing Job Begun");
 
-                var devicesWithTriggersIds = dbContext.Devices.Where(d => d.Triggers.Any(t => t.IsActive)).Select(d => d.Id).ToList();
-
-                foreach (var deviceId in devicesWithTriggersIds)
+                using (var autoFacScope = parentScope.BeginLifetimeScope())
                 {
-                    deviceService.ProcessTriggers(deviceId);
+                    var dbContext = autoFacScope.Resolve<IAtHomeDbContext>();
+                    var deviceService = autoFacScope.Resolve<IDeviceService>();
+
+                    var devicesWithTriggersIds =
+                        dbContext.Devices.Where(d => d.Triggers.Any(t => t.IsActive)).Select(d => d.Id).ToList();
+
+                    foreach (var deviceId in devicesWithTriggersIds)
+                    {
+                        deviceService.ProcessTriggers(deviceId);
+                    }
                 }
 
                 logger.Info("Device Trigger Processing Job Ended");

@@ -29,11 +29,14 @@ namespace WrightsAtHome.Server.Domain.Entities
         {
             PossibleStates = new List<DeviceState>();
             Triggers = new List<DeviceTrigger>();
+            StateChanges =new List<DeviceStateChange>();
         }
 
         public Device(params DeviceState[] possibleStates)
         {
             PossibleStates = new List<DeviceState>(possibleStates);
+            Triggers = new List<DeviceTrigger>();
+            StateChanges = new List<DeviceStateChange>();
         }
     }
 }

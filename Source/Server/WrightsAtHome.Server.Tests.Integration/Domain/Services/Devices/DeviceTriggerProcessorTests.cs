@@ -4,7 +4,7 @@ using Moq;
 using WrightsAtHome.Server.DataAccess;
 using WrightsAtHome.Server.Domain.Entities;
 using WrightsAtHome.Server.Domain.Services.Devices.Internal;
-using WrightsAtHome.Server.Domain.Services.Trigger;
+using WrightsAtHome.Server.Domain.Services.Trigger.Compiler;
 using WrightsAtHome.Server.Tests.Integration.Utility;
 using WrightsAtHome.Server.Tests.Unit.Utility;
 using WrightsAtHome.Tests.Integration.Utility;
@@ -34,7 +34,7 @@ namespace WrightsAtHome.Server.Tests.Integration.Domain.Services.Devices
                 underTest.ProcessTriggers(device.Id);
 
                 // Assert
-                stateSvc.Verify(s => s.ChangeDeviceState(device, It.Is<DeviceState>(ds => ds.Name == "On")), Times.Once());
+                stateSvc.Verify(s => s.ChangeDeviceState(device, It.Is<DeviceState>(ds => ds.Name == "On"), It.IsAny<DeviceTrigger>()), Times.Once());
                 SqlAssert.Count("SELECT COUNT(*) FROM DeviceTriggerWait WHERE DeviceTriggerId = " + device.Triggers[1].Id, 0);
             }
         }
@@ -58,7 +58,7 @@ namespace WrightsAtHome.Server.Tests.Integration.Domain.Services.Devices
                 underTest.ProcessTriggers(device.Id);
 
                 // Assert
-                stateSvc.Verify(s => s.ChangeDeviceState(device, It.Is<DeviceState>(ds => ds.Name == "On")), Times.Once());
+                stateSvc.Verify(s => s.ChangeDeviceState(device, It.Is<DeviceState>(ds => ds.Name == "On"), It.IsAny<DeviceTrigger>()), Times.Once());
                 SqlAssert.Count("SELECT COUNT(*) FROM DeviceTriggerWait WHERE DeviceTriggerId = " + device.Triggers[1].Id, 1);
             }
         }
@@ -86,7 +86,7 @@ namespace WrightsAtHome.Server.Tests.Integration.Domain.Services.Devices
                 underTest.ProcessTriggers(device.Id);
 
                 // Assert
-                stateSvc.Verify(s => s.ChangeDeviceState(device, It.Is<DeviceState>(ds => ds.Name == "On")), Times.Once());
+                stateSvc.Verify(s => s.ChangeDeviceState(device, It.Is<DeviceState>(ds => ds.Name == "On"), It.IsAny<DeviceTrigger>()), Times.Once());
                 SqlAssert.Count("SELECT COUNT(*) FROM DeviceTriggerWait WHERE DeviceTriggerId = " + device.Triggers[1].Id, 0);
             }
             
@@ -115,7 +115,7 @@ namespace WrightsAtHome.Server.Tests.Integration.Domain.Services.Devices
                 underTest.ProcessTriggers(device.Id);
 
                 // Assert
-                stateSvc.Verify(s => s.ChangeDeviceState(device, It.Is<DeviceState>(ds => ds.Name == "On")), Times.Once());
+                stateSvc.Verify(s => s.ChangeDeviceState(device, It.Is<DeviceState>(ds => ds.Name == "On"), It.IsAny<DeviceTrigger>()), Times.Once());
                 SqlAssert.Count("SELECT COUNT(*) FROM DeviceTriggerWait WHERE DeviceTriggerId = " + device.Triggers[1].Id, 1);
             }
 
@@ -140,7 +140,7 @@ namespace WrightsAtHome.Server.Tests.Integration.Domain.Services.Devices
                 underTest.ProcessTriggers(device.Id);
 
                 // Assert
-                stateSvc.Verify(s => s.ChangeDeviceState(device, It.Is<DeviceState>(ds => ds.Name == "On")), Times.Once());
+                stateSvc.Verify(s => s.ChangeDeviceState(device, It.Is<DeviceState>(ds => ds.Name == "On"), It.IsAny<DeviceTrigger>()), Times.Once());
                 SqlAssert.Count("SELECT COUNT(*) FROM DeviceTriggerWait WHERE DeviceTriggerId = " + device.Triggers[1].Id, 1);
 
                 // Make it look two hours later to ensure the after will fire
@@ -150,7 +150,7 @@ namespace WrightsAtHome.Server.Tests.Integration.Domain.Services.Devices
                 underTest.ProcessTriggers(device.Id);
                 
                 // Assert
-                stateSvc.Verify(s => s.ChangeDeviceState(device, It.Is<DeviceState>(ds => ds.Name == "Off")), Times.Once());
+                stateSvc.Verify(s => s.ChangeDeviceState(device, It.Is<DeviceState>(ds => ds.Name == "Off"), It.IsAny<DeviceTrigger>()), Times.Once());
                 SqlAssert.Count("SELECT COUNT(*) FROM DeviceTriggerWait WHERE DeviceTriggerId = " + device.Triggers[1].Id, 0);
             }
         }
@@ -178,7 +178,7 @@ namespace WrightsAtHome.Server.Tests.Integration.Domain.Services.Devices
                 underTest.ProcessTriggers(device.Id);
 
                 // Assert
-                stateSvc.Verify(s => s.ChangeDeviceState(device, It.Is<DeviceState>(ds => ds.Name == "On")), Times.Once());
+                stateSvc.Verify(s => s.ChangeDeviceState(device, It.Is<DeviceState>(ds => ds.Name == "On"), It.IsAny<DeviceTrigger>()), Times.Once());
                 SqlAssert.Count("SELECT COUNT(*) FROM DeviceTriggerWait WHERE DeviceTriggerId = " + device.Triggers[1].Id, 1);
 
                 // Make it look 13 minutes later to make sure after won't fire yet...
@@ -188,7 +188,7 @@ namespace WrightsAtHome.Server.Tests.Integration.Domain.Services.Devices
                 underTest.ProcessTriggers(device.Id);
 
                 // Assert
-                stateSvc.Verify(s => s.ChangeDeviceState(device, It.Is<DeviceState>(ds => ds.Name == "Off")), Times.Never);
+                stateSvc.Verify(s => s.ChangeDeviceState(device, It.Is<DeviceState>(ds => ds.Name == "Off"), It.IsAny<DeviceTrigger>()), Times.Never);
                 SqlAssert.Count("SELECT COUNT(*) FROM DeviceTriggerWait WHERE DeviceTriggerId = " + device.Triggers[1].Id, 1);
 
                 // Now make it 14 minutes after start to ensure trigger fires
@@ -198,7 +198,7 @@ namespace WrightsAtHome.Server.Tests.Integration.Domain.Services.Devices
                 underTest.ProcessTriggers(device.Id);
 
                 // Assert
-                stateSvc.Verify(s => s.ChangeDeviceState(device, It.Is<DeviceState>(ds => ds.Name == "Off")), Times.Once);
+                stateSvc.Verify(s => s.ChangeDeviceState(device, It.Is<DeviceState>(ds => ds.Name == "Off"), It.IsAny<DeviceTrigger>()), Times.Once);
                 SqlAssert.Count("SELECT COUNT(*) FROM DeviceTriggerWait WHERE DeviceTriggerId = " + device.Triggers[1].Id, 0);
             }
 

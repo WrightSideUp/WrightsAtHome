@@ -4,6 +4,7 @@ using System.Data.Entity.Infrastructure;
 using System.Data.Entity.ModelConfiguration.Conventions;
 using System.Linq;
 using System.Reflection;
+using System.Threading.Tasks;
 using WrightsAtHome.Domain.Entities;
 using WrightsAtHome.Server.Domain.Entities;
 
@@ -29,7 +30,11 @@ namespace WrightsAtHome.Server.DataAccess
 
         DbEntityEntry<TEntity> Entry<TEntity>(TEntity entity) where TEntity: class;
 
+        Database Database { get; }
+
         int SaveChanges();
+
+        Task<int> SaveChangesAsync();
     }
     
     public class AtHomeDbContext : DbContext, IAtHomeDbContext
@@ -72,6 +77,23 @@ namespace WrightsAtHome.Server.DataAccess
             }
 
             return base.SaveChanges();
+        }
+
+        public override Task<int> SaveChangesAsync()
+        {
+            var changed = ChangeTracker.Entries<IBaseEntity>()
+                .Where(e => e.State == EntityState.Added || e.State == EntityState.Modified)
+                .Select(p => p.Entity);
+
+            var now = DateTime.Now;
+
+            foreach (var entity in changed)
+            {
+                entity.LastModified = now;
+                entity.LastModifiedUserId = 0;
+            }
+
+            return base.SaveChangesAsync();
         }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

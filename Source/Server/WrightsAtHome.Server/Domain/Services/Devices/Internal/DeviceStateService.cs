@@ -1,4 +1,8 @@
-﻿using System.Linq;
+﻿using System;
+using System.Data.Entity;
+using System.Data.Entity.Core;
+using System.Linq;
+using System.Threading.Tasks;
 using NLog;
 using WrightsAtHome.Server.DataAccess;
 using WrightsAtHome.Server.Domain.Entities;
@@ -11,7 +15,10 @@ namespace WrightsAtHome.Server.Domain.Services.Devices.Internal
         DeviceState GetCurrentDeviceState(int deviceId);
 
         // Change the state of the device if toState is different from Current State
-        void ChangeDeviceState(Device device, DeviceState toState);
+        void ChangeDeviceState(Device device, DeviceState toState, DeviceTrigger trigger);
+
+        // Change the state of a device if toState is different from Current State
+        Task ChangeDeviceStateAsync(int deviceId, int toStateId);
     }
 
     public class DeviceStateService : IDeviceStateService
@@ -19,7 +26,7 @@ namespace WrightsAtHome.Server.Domain.Services.Devices.Internal
         private readonly IAtHomeDbContext dbContext;
         private readonly Logger logger;
 
-        private DeviceStateService(IAtHomeDbContext dbContext)
+        public DeviceStateService(IAtHomeDbContext dbContext)
         {
             this.dbContext = dbContext;
             logger = LogManager.GetCurrentClassLogger();
@@ -27,10 +34,29 @@ namespace WrightsAtHome.Server.Domain.Services.Devices.Internal
 
         public DeviceState GetCurrentDeviceState(int deviceId)
         {
-            return dbContext.DeviceStates.First();
+            if (! dbContext.Devices.Any(d => d.Id == deviceId))
+            {
+                throw new ObjectNotFoundException(string.Format("No Device with Id {0} is defined.", deviceId));
+            }
+
+            // Temporarily look for last state change and return it if it exists,
+            // Otherwise return On for even deviceId's and Off for odd.
+            var lastChange =
+                dbContext.DeviceStateChanges
+                    .Include(sc => sc.AfterState)
+                    .AsNoTracking()
+                    .Where(sc => sc.Device.Id == deviceId)
+                    .OrderByDescending(sc => sc.AppliedDate)
+                    .Select(sc => sc.AfterState)
+                    .FirstOrDefault();
+
+            return lastChange ??
+                   (deviceId%2 == 0
+                       ? dbContext.DeviceStates.Single(s => s.Name == "On")
+                       : dbContext.DeviceStates.Single(s => s.Name == "Off"));
         }
 
-        public void ChangeDeviceState(Device device, DeviceState toState)
+        public void ChangeDeviceState(Device device, DeviceState toState, DeviceTrigger trigger)
         {
             var currentState = GetCurrentDeviceState(device.Id);
 
@@ -38,8 +64,42 @@ namespace WrightsAtHome.Server.Domain.Services.Devices.Internal
             if (toState.Id != currentState.Id)
             {
                 logger.Info("Changing State for Device {0} from {1} to {2}", device.Name, currentState.Name, toState.Name);
+
+                device.StateChanges.Add(new DeviceStateChange
+                {
+                    AppliedDate = DateTime.Now,
+                    AfterState = toState,
+                    BeforeState = currentState,
+                    FromTrigger = trigger,
+                    WasOverride = (trigger == null)
+                });
+
+                dbContext.SaveChanges();
+
                 // TODO: Change It!
             }
+        }
+
+        public async Task ChangeDeviceStateAsync(int deviceId, int toStateId)
+        {
+            var device = await dbContext.Devices
+                .Include(d => d.PossibleStates)
+                .SingleOrDefaultAsync(d => d.Id == deviceId);
+
+            if (device == null)
+            {
+                throw new ObjectNotFoundException(string.Format("Device with id {0} not found.", deviceId));
+            }
+
+            var toState = await dbContext.DeviceStates
+                .SingleOrDefaultAsync(s => s.Id == toStateId);
+
+            if (toState == null)
+            {
+                throw new ObjectNotFoundException(string.Format("Device State with id {0} not found.", toStateId));
+            }
+
+            ChangeDeviceState(device, toState, null);
         }
     }
 }

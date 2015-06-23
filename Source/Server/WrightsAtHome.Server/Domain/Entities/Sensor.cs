@@ -24,5 +24,10 @@ namespace WrightsAtHome.Server.Domain.Entities
         public DateTime LastModified { get; set; }
 
         public int LastModifiedUserId { get; set; }
+
+        public Sensor()
+        {
+            Readings = new List<SensorReading>();
+        }
     }
 }

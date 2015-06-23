@@ -1,9 +1,8 @@
 ﻿using System;
-using System.Linq;
-using WrightsAtHome.Server.DataAccess;
 using WrightsAtHome.Server.Domain.Entities;
+using WrightsAtHome.Server.Domain.Services.Sensors;
 
-namespace WrightsAtHome.Server.Domain.Services.Trigger.Parser
+namespace WrightsAtHome.Server.Domain.Services.Trigger
 {
     public interface ITriggerHelpers
     {
@@ -14,15 +13,17 @@ namespace WrightsAtHome.Server.Domain.Services.Trigger.Parser
         string GetStringSensorReading(string sensorName);
 
         bool TryGetSensorName(string inputSensorName, out string actualSensorName);
+
+        bool IsValidSensorName(string sensorName);
     }
 
     public class TriggerHelpers : ITriggerHelpers
     {
-        private readonly IAtHomeDbContext dbContext;
+        private readonly ISensorCache sensorCache;
 
-        public TriggerHelpers(IAtHomeDbContext dbContext)
+        public TriggerHelpers(ISensorCache sensorCache)
         {
-            this.dbContext = dbContext;
+            this.sensorCache = sensorCache;
         }
         
         public DateTime GetCurrentTime()
@@ -42,21 +43,21 @@ namespace WrightsAtHome.Server.Domain.Services.Trigger.Parser
 
         public bool TryGetSensorName(string inputSensorName, out string actualSensorName)
         {
-            var sensor = GetSensor(inputSensorName);
+            Sensor sensor;
 
-            if (sensor != null)
+            if (!sensorCache.TryGetSensor(inputSensorName, out sensor))
             {
-                actualSensorName = sensor.Name;
-                return true;
+                actualSensorName = string.Empty;
+                return false;
             }
 
-            actualSensorName = string.Empty;
-            return false;
+            actualSensorName = sensor.Name;
+            return true;
         }
 
-        private Sensor GetSensor(string sensorName)
+        public bool IsValidSensorName(string sensorName)
         {
-            return dbContext.Sensors.FirstOrDefault(s => s.Name.ToLower() == sensorName.ToLower());
+            return sensorCache.IsValidSensorName(sensorName);
         }
     }
 }
