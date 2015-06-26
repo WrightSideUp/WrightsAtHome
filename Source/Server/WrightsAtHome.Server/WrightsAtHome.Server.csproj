@@ -216,10 +216,13 @@
     <Compile Include="API\ApiModule.cs" />
     <Compile Include="API\Common\AutoMapperConfiguration.cs" />
     <Compile Include="API\Common\BaseApiController.cs" />
+    <Compile Include="API\Common\GlobalExceptionHandler.cs" />
+    <Compile Include="API\Common\GlobalExceptionLogger.cs" />
+    <Compile Include="API\Common\ModelValidationFilter.cs" />
     <Compile Include="API\Common\NotFoundMessageActionResult.cs" />
     <Compile Include="API\Devices\DeviceTriggerValidationController.cs" />
     <Compile Include="API\Devices\Model\DeviceDetailsDto.cs" />
-    <Compile Include="API\Devices\Model\DeviceScheduleController.cs" />
+    <Compile Include="API\Devices\DeviceScheduleController.cs" />
     <Compile Include="API\Devices\Model\DevicesMapping.cs" />
     <Compile Include="API\Devices\Model\DeviceTriggerDto.cs" />
     <Compile Include="API\Devices\Model\TriggerValidationDto.cs" />
@@ -236,6 +239,7 @@
     <Compile Include="Domain\Entities\TriggerInfo.cs" />
     <Compile Include="Domain\Entities\TriggerValidation.cs" />
     <Compile Include="Domain\Services\DateTimeHelpers.cs" />
+    <Compile Include="Domain\Services\Devices\DeviceScheduleService.cs" />
     <Compile Include="Domain\Services\Devices\Internal\DeviceTriggerEventService.cs" />
     <Compile Include="Domain\Services\Devices\Internal\DeviceTriggerCompiler.cs" />
     <Compile Include="Domain\Services\Devices\Internal\DeviceTriggerProcessor.cs" />

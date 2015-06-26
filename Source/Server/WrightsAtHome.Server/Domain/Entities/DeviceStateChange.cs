@@ -35,7 +35,6 @@ namespace WrightsAtHome.Server.Domain.Entities
                 AppliedDate);
         }
 
-        [ConcurrencyCheck]
         public DateTime LastModified { get; set; }
 
         public int LastModifiedUserId { get; set; }

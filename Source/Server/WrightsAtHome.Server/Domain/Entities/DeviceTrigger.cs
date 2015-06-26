@@ -9,7 +9,11 @@ namespace WrightsAtHome.Server.Domain.Entities
 
         public Device Device { get; set; }
 
+        public int DeviceId { get; set; }
+
         public DeviceState ToState { get; set; }
+
+        public int ToStateId { get; set; }
 
         public string TriggerText { get; set; }
 
@@ -17,7 +21,6 @@ namespace WrightsAtHome.Server.Domain.Entities
 
         public bool IsActive { get; set; }
 
-        [ConcurrencyCheck]
         public DateTime LastModified { get; set; }
 
         public int LastModifiedUserId { get; set; }

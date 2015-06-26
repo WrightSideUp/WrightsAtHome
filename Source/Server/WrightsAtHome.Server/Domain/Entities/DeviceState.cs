@@ -16,7 +16,6 @@ namespace WrightsAtHome.Server.Domain.Entities
 
         public bool IsTransitional { get; set; }
 
-        [ConcurrencyCheck]
         public DateTime LastModified { get; set; }
 
         public int LastModifiedUserId { get; set; }

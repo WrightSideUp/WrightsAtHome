@@ -5,6 +5,7 @@ using System.Net.Http.Formatting;
 using System.Reflection;
 using System.Web.Http;
 using System.Web.Http.Cors;
+using System.Web.Http.ExceptionHandling;
 using Autofac;
 using Autofac.Integration.WebApi;
 using AutoMapper;
@@ -78,6 +79,13 @@ namespace WrightsAtHome.Server
 
             LogManager.ThrowExceptions = true;
             LogManager.Configuration = logConfig;
+
+            //-----------------------------------
+            // Setup Filters 
+            //-----------------------------------
+            config.Services.Replace(typeof(IExceptionHandler), new GlobalExceptionHandler());
+            config.Services.Add(typeof(IExceptionLogger), new GlobalExceptionLogger());
+            config.Filters.Add(new ModelValidationFilterAttribute());
 
             //-----------------------------------
             // Setup Hangfire for background jobs

@@ -4,9 +4,7 @@ using WrightsAtHome.Server.Domain.Entities;
 namespace WrightsAtHome.Server.DataAccess.Migrations
 {
     using System;
-    using System.Data.Entity;
     using System.Data.Entity.Migrations;
-    using System.Linq;
 
     internal sealed class Configuration : DbMigrationsConfiguration<WrightsAtHome.Server.DataAccess.AtHomeDbContext>
     {
@@ -16,7 +14,7 @@ namespace WrightsAtHome.Server.DataAccess.Migrations
             MigrationsDirectory = @"DataAccess\Migrations";
         }
 
-        protected override void Seed(WrightsAtHome.Server.DataAccess.AtHomeDbContext context)
+        protected override void Seed(AtHomeDbContext context)
         {
             context.Database.ExecuteSqlCommand("DELETE FROM DeviceStateChange");
             context.Database.ExecuteSqlCommand("DELETE FROM DeviceTrigger");
@@ -50,6 +48,10 @@ namespace WrightsAtHome.Server.DataAccess.Migrations
                     {
                         new DeviceTrigger { ToState = stateOn, Sequence = 1, TriggerText = "WHEN CurrentTime >= 6:00pm AND LightLevel <= 5", IsActive = true },
                         new DeviceTrigger { ToState = stateOff, Sequence = 2, TriggerText = "AT 10:00pm", IsActive = true}
+                    },
+                    StateChanges = new List<DeviceStateChange>
+                    {
+                        new DeviceStateChange { AfterState = stateOff, AppliedDate = DateTime.Now.Date + new TimeSpan(0, 22, 0), BeforeState = stateOn, WasOverride = false }
                     }
                 },
 
@@ -57,7 +59,11 @@ namespace WrightsAtHome.Server.DataAccess.Migrations
                 {
                     Name = "Fountain",
                     ImageName = "Fountain.png",
-                    Sequence = 2
+                    Sequence = 2,
+                    StateChanges = new List<DeviceStateChange>
+                    {
+                        new DeviceStateChange {AfterState = stateOn, AppliedDate = DateTime.Now.Date + new TimeSpan(0, 18, 0), BeforeState = stateOff, WasOverride = true }
+                    }
                 },
 
                 new Device(stateOff, stateOn)
@@ -86,7 +92,7 @@ namespace WrightsAtHome.Server.DataAccess.Migrations
 
                 new Device(stateOff, stateLow, stateHigh)
                 {
-                    Name = "PoolPump",
+                    Name = "Pool Pump",
                     ImageName = "PoolPump.png",
                     Sequence = 5,
                     Triggers = new List<DeviceTrigger>

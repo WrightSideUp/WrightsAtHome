@@ -12,7 +12,6 @@ namespace WrightsAtHome.Server.Domain.Entities
 
         public IList<Sensor> Sensors { get; set; }
 
-        [ConcurrencyCheck]
         public DateTime LastModified { get; set; }
 
         public int LastModifiedUserId { get; set; }

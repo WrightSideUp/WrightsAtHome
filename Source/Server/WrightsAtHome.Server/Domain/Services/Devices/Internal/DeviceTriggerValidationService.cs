@@ -27,7 +27,7 @@ namespace WrightsAtHome.Server.Domain.Services.Devices.Internal
             var result = new DeviceTriggerValidationInfo();
             
             // First perform individual validation on each trigger
-            foreach (var trigger in device.Triggers)
+            foreach (var trigger in device.Triggers.Where(t => t.IsActive))
             {
                 result.TriggerValidations.Add(triggerValidator.ValidateTrigger(trigger.TriggerText));
             }
@@ -38,13 +38,17 @@ namespace WrightsAtHome.Server.Domain.Services.Devices.Internal
             {
                 if (ValidateToStates(device, result))
                 {
-                    // Compile all the triggers so we can validate their relationships
-                    var compiledTriggers = device.Triggers.OrderBy(t => t.Sequence).Select(t => triggerCompiler.CompileTrigger(t)).ToList();
+                    if (ValidateSequences(device, result))
+                    { 
+                        // Compile all the triggers so we can validate their relationships
+                        var compiledTriggers = device.Triggers.Where(t => t.IsActive).OrderBy(t => t.Sequence).Select(t => triggerCompiler.CompileTrigger(t)).ToList();
                 
-                    // Check for inter-trigger errors
-                    if (ValidateAfterTriggers(compiledTriggers, result))
-                    {
-                    
+                        // Check for inter-trigger errors
+                        if (ValidateAfterTriggers(compiledTriggers, result))
+                        {
+
+                            result.IsValid = true;
+                        }
                     }
                 }
             }
@@ -59,7 +63,7 @@ namespace WrightsAtHome.Server.Domain.Services.Devices.Internal
 
         private bool ValidateToStates(Device device, DeviceTriggerValidationInfo result)
         {
-            var errorStates = device.Triggers.Where(t => device.PossibleStates.All(ps => ps.Id != t.ToState.Id)).ToList();
+            var errorStates = device.Triggers.Where(t => t.IsActive && device.PossibleStates.All(ps => ps.Id != t.ToState.Id)).ToList();
 
             if (errorStates.Count > 0)
             {
@@ -75,9 +79,31 @@ namespace WrightsAtHome.Server.Domain.Services.Devices.Internal
             return true;
         }
 
+        private bool ValidateSequences(Device device, DeviceTriggerValidationInfo result)
+        {
+            var dupeSequences =
+                device.Triggers.Where(t => t.IsActive)
+                    .GroupBy(t => t.Sequence)
+                    .Where(g => g.Count() > 1)
+                    .Select(g => new { Sequence = g.Key, Triggers = g.ToList() })
+                    .ToList();
+
+            if (dupeSequences.Any())
+            {
+                var firstDupe = dupeSequences.First();
+                result.IsValid = false;
+                result.ErrorMessage =
+                    string.Format("Sequence {0} is repeated in triggers '{1}' and '{2}'.  Sequence must be unique.",
+                        firstDupe.Sequence, firstDupe.Triggers[0].TriggerText, firstDupe.Triggers[1].TriggerText);
+                return false;
+            }
+
+            return true;
+        }
+
         private bool ValidateAfterTriggers(IList<TriggerInfo> compiledTriggers, DeviceTriggerValidationInfo result)
         {
-            if (compiledTriggers.Count > 0 && compiledTriggers[0].TriggerType == TriggerType.After)
+            if (compiledTriggers.Count > 1 && compiledTriggers[0].TriggerType == TriggerType.After)
             {
                 result.IsValid = false;
                 result.ErrorMessage =

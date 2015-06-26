@@ -10,20 +10,22 @@ namespace WrightsAtHome.Server.API.Devices
     public class DeviceTriggerValidationController : ApiController
     {
         private readonly ITriggerValidator triggerValidator;
+        private readonly IMappingEngine mapper;
 
-        public DeviceTriggerValidationController(ITriggerValidator triggerValidator)
+        public DeviceTriggerValidationController(ITriggerValidator triggerValidator, IMappingEngine mapper)
         {
             this.triggerValidator = triggerValidator;
+            this.mapper = mapper;
         }
 
         [HttpPost]
         [Route("triggerValidation")]
         [ResponseType(typeof(TriggerValidationDto))]
-        public IHttpActionResult ValidateTrigger([FromBody] TriggerValidationRequestDto request)
+        public IHttpActionResult ValidateTrigger(TriggerValidationRequestDto request)
         {
             if (ModelState.IsValid)
             {
-                return Ok(Mapper.Map<TriggerValidationDto>(
+                return Ok(mapper.Map<TriggerValidationDto>(
                             triggerValidator.ValidateTrigger(request.TriggerText)));
             }
 

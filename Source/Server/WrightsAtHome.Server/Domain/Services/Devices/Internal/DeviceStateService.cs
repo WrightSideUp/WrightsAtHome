@@ -50,10 +50,16 @@ namespace WrightsAtHome.Server.Domain.Services.Devices.Internal
                     .Select(sc => sc.AfterState)
                     .FirstOrDefault();
 
-            return lastChange ??
-                   (deviceId%2 == 0
-                       ? dbContext.DeviceStates.Single(s => s.Name == "On")
-                       : dbContext.DeviceStates.Single(s => s.Name == "Off"));
+            if (lastChange == null)
+            {
+                var device = dbContext.Devices.Include(d => d.PossibleStates).Single(d => d.Id == deviceId);
+
+                return (deviceId%2 == 0)
+                    ? device.PossibleStates[0]
+                    : device.PossibleStates[1];
+            }
+
+            return lastChange;
         }
 
         public void ChangeDeviceState(Device device, DeviceState toState, DeviceTrigger trigger)
@@ -65,11 +71,13 @@ namespace WrightsAtHome.Server.Domain.Services.Devices.Internal
             {
                 logger.Info("Changing State for Device {0} from {1} to {2}", device.Name, currentState.Name, toState.Name);
 
+                var beforeState = dbContext.DeviceStates.Single(s => s.Id == currentState.Id);
+                
                 device.StateChanges.Add(new DeviceStateChange
                 {
                     AppliedDate = DateTime.Now,
                     AfterState = toState,
-                    BeforeState = currentState,
+                    BeforeState = beforeState,
                     FromTrigger = trigger,
                     WasOverride = (trigger == null)
                 });
@@ -91,12 +99,12 @@ namespace WrightsAtHome.Server.Domain.Services.Devices.Internal
                 throw new ObjectNotFoundException(string.Format("Device with id {0} not found.", deviceId));
             }
 
-            var toState = await dbContext.DeviceStates
-                .SingleOrDefaultAsync(s => s.Id == toStateId);
+            var toState = device.PossibleStates.SingleOrDefault(s => s.Id == toStateId);
 
             if (toState == null)
             {
-                throw new ObjectNotFoundException(string.Format("Device State with id {0} not found.", toStateId));
+                throw new ObjectNotFoundException(
+                    string.Format("Device State with id {0} not found or is invalid for {1}.", toStateId, device.Name));
             }
 
             ChangeDeviceState(device, toState, null);

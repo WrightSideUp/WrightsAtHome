@@ -8,12 +8,14 @@ namespace WrightsAtHome.Server.DataAccess.Configuration
         public DeviceTriggerConfiguration()
         {
             HasRequired(dt => dt.Device)
-                .WithMany(dv => dv.Triggers)
-                .Map(m => m.MapKey("DeviceId"));
+                .WithMany(d => d.Triggers)
+                .HasForeignKey(t => t.DeviceId);
 
             HasRequired(dt => dt.ToState)
                 .WithMany()
-                .Map(m => m.MapKey("DeviceStateId"));
+                .HasForeignKey(dt => dt.ToStateId);
+
+            Property(d => d.ToStateId).HasColumnName("DeviceStateId");
 
             Property(d => d.TriggerText).HasMaxLength(1024).IsRequired();
             Property(d => d.Sequence).IsRequired();

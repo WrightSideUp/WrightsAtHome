@@ -20,7 +20,7 @@ namespace WrightsAtHome.Server.API.Devices
         {
             this.deviceService = deviceService;
         }
-
+        
         [HttpGet]
         [Route("{id:int}/state")]
         public IHttpActionResult Get(int id)
@@ -37,7 +37,7 @@ namespace WrightsAtHome.Server.API.Devices
         
         [HttpPost]
         [Route("{id:int}/state")]
-        public async Task<IHttpActionResult> Post(int id, [FromBody]DeviceStateChangeDto changeRequest)
+        public async Task<IHttpActionResult> Post(int id, DeviceStateChangeDto changeRequest)
         {
             if (!ModelState.IsValid)
             {
@@ -49,9 +49,9 @@ namespace WrightsAtHome.Server.API.Devices
                 await deviceService.ChangeDeviceStateAsync(id, changeRequest.StateId);
                 return Ok();
             }
-            catch (ObjectNotFoundException)
+            catch (ObjectNotFoundException ex)
             {
-                return NotFound("No Device with id {0} exists.", id);
+                return NotFound(ex.Message);
             }
         }
     }

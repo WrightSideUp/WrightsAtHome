@@ -7,20 +7,18 @@ using AutoMapper;
 using WrightsAtHome.Server.DataAccess;
 using WrightsAtHome.Server.API.Common;
 using WrightsAtHome.Server.API.Devices.Model;
-using WrightsAtHome.Server.Domain.Entities;
-using WrightsAtHome.Server.Domain.Services.Devices;
 
 namespace WrightsAtHome.Server.API.Devices
 {
     [RoutePrefix("api/devices")]
     public class DevicesController : BaseApiController
     {
-        private readonly IDeviceService deviceService;
+        private readonly IMappingEngine mapper;
 
-        public DevicesController(IAtHomeDbContext dbContext, IDeviceService deviceService) 
+        public DevicesController(IAtHomeDbContext dbContext, IMappingEngine mapper) 
             : base(dbContext)
         {
-            this.deviceService = deviceService;
+            this.mapper = mapper;
         }
         
         // GET: api/devices
@@ -34,7 +32,7 @@ namespace WrightsAtHome.Server.API.Devices
                             .Include(d => d.PossibleStates)
                             .AsNoTracking()
                             .OrderBy(d => d.Sequence)
-                            .ToArrayAsync()).Select(d => MapServiceProperties(Mapper.Map<DeviceDto>(d)))
+                            .ToArrayAsync()).Select(d => mapper.Map<DeviceDto>(d))
                     );
         }
 
@@ -54,7 +52,7 @@ namespace WrightsAtHome.Server.API.Devices
                 return NotFound("No Device with Id '{0}' exists", id);
             }
 
-            return Ok(MapServiceProperties(Mapper.Map<DeviceDto>(result)));
+            return Ok(mapper.Map<DeviceDto>(result));
         }
 
         // GET api/devices/5/details
@@ -66,7 +64,6 @@ namespace WrightsAtHome.Server.API.Devices
             var device = await dbContext.Devices
                         .Include(d => d.Triggers.Select(t => t.ToState))
                         .Include(d => d.PossibleStates)
-                        .AsNoTracking()
                         .SingleOrDefaultAsync(d => d.Id == id);
 
             if (device == null)
@@ -74,23 +71,16 @@ namespace WrightsAtHome.Server.API.Devices
                 return NotFound("No Device with Id '{0}' exists", id);
             }
 
-            var lastChange = await dbContext.Database.SqlQuery<DeviceStateChange>(
-                "SELECT TOP (1) * FROM dbo.DeviceStateChange WHERE DeviceId = @p0 ORDER BY AppliedDate DESC",
-                device.Id).SingleOrDefaultAsync();
+            dbContext.Entry(device)
+                .Collection(d => d.StateChanges)
+                .Query()
+                .Include(s => s.BeforeState)
+                .Include(s => s.AfterState)
+                .OrderByDescending(s => s.AppliedDate)
+                .Take(1)
+                .Load();
 
-            if (lastChange != null)
-            {
-                device.StateChanges.Add(lastChange);
-            }
-
-            return Ok(MapServiceProperties(Mapper.Map<DeviceDetailsDto>(device)));
-        }
-
-        private DeviceDto MapServiceProperties(DeviceDto dto) 
-        {
-            dto.NextEvent = deviceService.GetNextTriggerEvent(dto.Id);
-            dto.CurrentStateId = deviceService.GetCurrentDeviceState(dto.Id).Id;
-            return dto;
+            return Ok(mapper.Map<DeviceDetailsDto>(device));
         }
     }
 }

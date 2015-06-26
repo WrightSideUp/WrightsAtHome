@@ -58,6 +58,10 @@
       <HintPath>..\packages\Moq.4.2.1502.0911\lib\net40\Moq.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5, processorArchitecture=MSIL">
       <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
       <Private>True</Private>
@@ -67,6 +71,10 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Net.Http" />
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -86,14 +94,21 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="API\Devices\DeviceScheduleControllerTests.cs" />
+    <Compile Include="API\Devices\DevicesControllerTests.cs" />
+    <Compile Include="API\Devices\DeviceStateControllerTests.cs" />
+    <Compile Include="API\Devices\DeviceTriggerValidationControllerTests.cs" />
     <Compile Include="Domain\Services\Devices\DeviceTriggerEventServiceTests.cs" />
     <Compile Include="Domain\Services\Devices\DeviceTriggerProcessorTests.cs" />
+    <Compile Include="Utility\ApiCollection.cs" />
+    <Compile Include="Utility\ApiFixture.cs" />
     <Compile Include="Utility\DatabaseCollection.cs" />
     <Compile Include="Utility\DatabaseFixture.cs" />
     <Compile Include="Utility\DatabaseSnapshot.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utility\DeviceUtils.cs" />
     <Compile Include="Utility\SqlAssert.cs" />
+    <Compile Include="Utility\SqlQuery.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config">

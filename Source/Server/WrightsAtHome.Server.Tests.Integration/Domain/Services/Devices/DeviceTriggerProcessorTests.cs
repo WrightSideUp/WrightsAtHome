@@ -220,10 +220,10 @@ namespace WrightsAtHome.Server.Tests.Integration.Domain.Services.Devices
                 var underTest = new DeviceTriggerProcessor(ctx, triggerComp, stateSvc.Object, helpers);
 
                 // Act
-                var ex = Assert.Throws<ArgumentException>(() => underTest.ProcessTriggers(42));
+                var ex = Assert.Throws<ArgumentException>(() => underTest.ProcessTriggers(4156422));
 
                 // Assert
-                Assert.Equal("No Device with Id 42 exists\r\nParameter name: deviceId", ex.Message);
+                Assert.Equal("No Device with Id 4156422 exists\r\nParameter name: deviceId", ex.Message);
                 Assert.Equal("deviceId", ex.ParamName);
             }
         }

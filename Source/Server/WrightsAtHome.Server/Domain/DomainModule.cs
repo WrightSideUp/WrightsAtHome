@@ -26,7 +26,8 @@ namespace WrightsAtHome.Server.Domain
             builder.RegisterType<TriggerValidator>().As<ITriggerValidator>().InstancePerLifetimeScope();
             builder.RegisterType<DeviceTriggerEventService>().As<IDeviceTriggerEventService>().InstancePerLifetimeScope();
             builder.RegisterType<DeviceService>().As<IDeviceService>().InstancePerLifetimeScope();
-            
+            builder.RegisterType<DeviceScheduleService>().As<IDeviceScheduleService>().InstancePerLifetimeScope();
+
             builder.RegisterType<DeviceTriggerJob>().As<IDeviceTriggerJob>().InstancePerLifetimeScope();
             builder.RegisterType<SensorReadingJob>().As<ISensorReadJob>().InstancePerLifetimeScope();
         }

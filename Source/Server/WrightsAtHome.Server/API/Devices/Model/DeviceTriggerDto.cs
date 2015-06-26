@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace WrightsAtHome.Server.API.Devices.Model
 {
@@ -21,5 +22,7 @@ namespace WrightsAtHome.Server.API.Devices.Model
 
         [Required]
         public bool IsActive { get; set; }
+
+        public DateTime LastModified { get; set; }
     }
 }

@@ -13,7 +13,6 @@ namespace WrightsAtHome.Server.Domain.Entities
 
         public decimal Value { get; set; }
 
-        [ConcurrencyCheck]
         public DateTime LastModified { get; set; }
 
         public int LastModifiedUserId { get; set; }
